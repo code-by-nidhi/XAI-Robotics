@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480" fill="none" stroke="#3fd8ff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+  <g stroke-opacity=".55">
+    <path d="M0 72h96l24 24h88l16-16h56"/>
+    <path d="M0 120h48l24 24v64l24 24h72"/>
+    <path d="M168 0v40l24 24v32"/>
+    <path d="M312 0v56l-32 32h-56"/>
+    <path d="M480 160h-72l-24-24v-40l-24-24h-24"/>
+    <path d="M480 208h-104l-32 32v88"/>
+    <path d="M240 480v-56l24-24h96l24-24v-56"/>
+    <path d="M96 480v-72l32-32h48l24-24v-40"/>
+    <path d="M0 328h64l24 24h40"/>
+    <path d="M480 416h-48l-24-24h-56"/>
+    <path d="M168 312h64l24-24h40l24 24h32"/>
+    <path d="M24 0v24l-24 24"/>
+    <path d="M440 480v-32l40-40"/>
+  </g>
+  <g stroke-opacity=".75" fill="#05080f">
+    <circle cx="280" cy="80" r="4"/>
+    <circle cx="168" cy="232" r="4"/>
+    <circle cx="192" cy="96" r="4"/>
+    <circle cx="224" cy="88" r="4"/>
+    <circle cx="336" cy="72" r="4"/>
+    <circle cx="344" cy="328" r="4"/>
+    <circle cx="200" cy="312" r="4"/>
+    <circle cx="128" cy="352" r="4"/>
+    <circle cx="352" cy="392" r="4"/>
+    <circle cx="384" cy="320" r="4"/>
+    <circle cx="200" cy="312" r="4"/>
+  </g>
+  <g stroke-opacity=".4">
+    <rect x="200" y="160" width="72" height="72" rx="4"/>
+    <path d="M212 160v-10M228 160v-10M244 160v-10M260 160v-10M212 232v10M228 232v10M244 232v10M260 232v10M200 172h-10M200 188h-10M200 204h-10M200 220h-10M272 172h10M272 188h10M272 204h10M272 220h10"/>
+    <rect x="392" y="440" width="28" height="16" rx="2"/>
+    <rect x="40" y="200" width="16" height="28" rx="2"/>
+  </g>
+  <g fill="#3fd8ff" stroke="none" fill-opacity=".7">
+    <circle cx="236" cy="196" r="2"/>
+    <circle cx="96" cy="72" r="2"/>
+    <circle cx="96" cy="232" r="2"/>
+    <circle cx="384" cy="136" r="2"/>
+    <circle cx="264" cy="400" r="2"/>
+  </g>
+</svg>
