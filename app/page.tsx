@@ -1,5 +1,7 @@
 import Site from "@/components/Site";
+import { getFaqs, getSite } from "@/lib/cms";
 
-export default function Page() {
-  return <Site />;
+export default async function Page() {
+  const [site, faqs] = await Promise.all([getSite(), getFaqs()]);
+  return <Site site={site} faqs={faqs} />;
 }

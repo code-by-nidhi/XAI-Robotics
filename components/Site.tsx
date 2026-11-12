@@ -24,9 +24,24 @@ import Partner from "./Partner";
 import Faq from "./Faq";
 import Contact from "./Contact";
 import Footer from "./Footer";
+import { cmsBrowserUrl, type FaqItem, type SiteSettings } from "@/lib/cms";
 
-export default function Site() {
+export default function Site({ site, faqs }: { site: SiteSettings; faqs: FaqItem[] }) {
   const lenisRef = useRef<Lenis | null>(null);
+
+  // One page view per visit to the homepage, counted by the CMS (Analytics).
+  // Fire-and-forget: the CMS always answers 204, and a failure here must never
+  // reach the visitor.
+  useEffect(() => {
+    const url = cmsBrowserUrl("/public/track");
+    if (!url) return;
+    fetch(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ path: window.location.pathname }),
+      keepalive: true,
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -78,10 +93,10 @@ export default function Site() {
         <Audience />
         <Events onNavigate={navigate} />
         <Partner onNavigate={navigate} />
-        <Faq />
-        <Contact />
+        <Faq items={faqs} />
+        <Contact site={site} />
       </main>
-      <Footer onNavigate={navigate} />
+      <Footer onNavigate={navigate} social={site.social} />
     </>
   );
 }

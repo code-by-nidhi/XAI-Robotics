@@ -1,0 +1,14 @@
+node_modules
+dist
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Uploaded media, and private files (CVs) — data, not source
+uploads
+private
+
+*.log
+.DS_Store

@@ -1,16 +1,21 @@
 import type { Metadata, Viewport } from "next";
 import { Michroma, Inter, JetBrains_Mono } from "next/font/google";
+import { getSite } from "@/lib/cms";
 import "./globals.css";
 
 const display = Michroma({ weight: "400", subsets: ["latin"], variable: "--font-display" });
 const body = Inter({ subsets: ["latin"], variable: "--font-body" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
-export const metadata: Metadata = {
-  title: "XAI Robotics — Machines that perceive, reason and move",
-  description:
-    "XAI Robotics engineers autonomous humanoids, manipulators, quadrupeds and aerial systems powered by embodied intelligence.",
-};
+/** Title, description and indexing come from CMS Settings → SEO. */
+export async function generateMetadata(): Promise<Metadata> {
+  const { seo } = await getSite();
+  return {
+    title: seo.defaultTitle,
+    description: seo.defaultDescription,
+    robots: seo.allowIndexing ? undefined : { index: false, follow: false },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#050506",

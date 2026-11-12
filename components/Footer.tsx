@@ -4,8 +4,27 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import Logo from "./Logo";
 import { NAV_LINKS } from "./Nav";
+import type { SiteSettings } from "@/lib/cms";
 
-export default function Footer({ onNavigate }: { onNavigate: (t: string) => void }) {
+/** Settings → Social, in the order the footer lists them. */
+const SOCIAL: { key: keyof SiteSettings["social"]; label: string }[] = [
+  { key: "linkedin", label: "LinkedIn" },
+  { key: "x", label: "X / Twitter" },
+  { key: "youtube", label: "YouTube" },
+  { key: "instagram", label: "Instagram" },
+  { key: "facebook", label: "Facebook" },
+];
+
+export default function Footer({
+  onNavigate,
+  social,
+}: {
+  onNavigate: (t: string) => void;
+  social: SiteSettings["social"];
+}) {
+  // Only profiles set in the CMS; an empty or "#" link would go nowhere.
+  const profiles = SOCIAL.filter(({ key }) => social[key] && social[key] !== "#");
+
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -42,9 +61,11 @@ export default function Footer({ onNavigate }: { onNavigate: (t: string) => void
             ))}
           </nav>
           <div className="ft-links">
-            <a href="#">LinkedIn</a>
-            <a href="#">X / Twitter</a>
-            <a href="#">YouTube</a>
+            {profiles.map(({ key, label }) => (
+              <a key={key} href={social[key]} target="_blank" rel="noopener noreferrer">
+                {label}
+              </a>
+            ))}
             <a href="#">Careers</a>
           </div>
         </div>

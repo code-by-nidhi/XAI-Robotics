@@ -2146,6 +2146,10 @@ button {
 .faq-list details p {
   padding-bottom: 18px;
 }
+/* Answers are plain text from the CMS; keep the editor's line breaks. */
+.faq-answer {
+  white-space: pre-line;
+}
 
 /* Contact ------------------------------------------------------------------ */
 .contact {
@@ -2258,6 +2262,38 @@ button {
 .field select:focus,
 .field textarea:focus {
   border-color: var(--accent);
+}
+.field-error {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #ff7a7a;
+}
+.field.has-error input,
+.field.has-error textarea,
+.field.has-error select {
+  border-color: #ff7a7a;
+}
+.ct-status {
+  margin-top: 14px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+.ct-status.is-error {
+  color: #ff7a7a;
+}
+.ct-status.is-ok {
+  color: var(--accent);
+}
+/* The honeypot: present for bots that fill every field, invisible to people
+   and skipped by keyboard and screen readers. */
+.ct-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 /* Footer ------------------------------------------------------------------- */
