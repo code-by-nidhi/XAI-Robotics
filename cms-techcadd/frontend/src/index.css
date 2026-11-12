@@ -5,29 +5,30 @@
     'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial,
     sans-serif;
 
-  /* Brand — Zaavi blue. 400, 600 and 700 are the Zaavi CMS's own accent,
-     brand and brand-hover (src/cms-zavi/styles/base.css in the website repo);
-     500 sits between them because buttons put white text on it and #5b97e6
-     is too light for that (3:1), while #2f6fd6 clears AA (4.8:1). */
-  --color-primary-50: #eef4fc;
-  --color-primary-100: #dce8f8;
-  --color-primary-200: #bdd5f4;
-  --color-primary-300: #8fb8ee;
-  --color-primary-400: #5b97e6;
-  --color-primary-500: #2f6fd6;
-  --color-primary-600: #2b5fae;
-  --color-primary-700: #234f93;
-  --color-primary-800: #1d4178;
-  --color-primary-900: #183662;
+  /* Brand — XAI Robotics blue, from the website's accent gradient
+     (#22e1ff → #2f7bff, app/globals.css). #2f7bff itself is 400: buttons put
+     white text on 500, and #2f7bff only reaches 3.9:1 there, while #1d66e8
+     clears AA (5.1:1). */
+  --color-primary-50: #edf5ff;
+  --color-primary-100: #d9e9ff;
+  --color-primary-200: #b5d3ff;
+  --color-primary-300: #7fb3ff;
+  --color-primary-400: #2f7bff;
+  --color-primary-500: #1d66e8;
+  --color-primary-600: #1a56c4;
+  --color-primary-700: #1747a0;
+  --color-primary-800: #143a80;
+  --color-primary-900: #112f66;
 
   /* Surfaces */
   --color-canvas: #f3f5f9;
   --color-surface: #ffffff;
 
-  /* Sidebar — the Zaavi CMS navy, so both admins read as one product. */
-  --color-shell-700: #18273f;
-  --color-shell-800: #0f1a2b;
-  --color-shell-900: #0b1828;
+  /* Sidebar — the website's near-black lab background (--bg-3, --bg-2,
+     --bg), so the CMS and the site read as one product. */
+  --color-shell-700: #0b1424;
+  --color-shell-800: #070d1a;
+  --color-shell-900: #04070d;
 }
 
 @layer base {
@@ -106,18 +107,18 @@
 }
 
 /**
- * Product backdrop for the signed-out pages: the Zaavi website's navy
- * (#0f1b33 / #081435) lit by its brand blues (#1f8bff, #0a3fb8, #7cc8ff — the
- * gradient in its icon). Abstract on purpose, so it reads as part of the
- * product rather than stock imagery.
+ * Product backdrop for the signed-out pages: the XAI Robotics website's
+ * near-black lab (#04070d / #070d1a / #0b1424) lit by its accent cyan and blue
+ * (#22e1ff, #2f7bff). Abstract on purpose, so it reads as part of the product
+ * rather than stock imagery.
  */
 @utility auth-backdrop {
-  background-color: #081435;
+  background-color: #04070d;
   background-image:
-    radial-gradient(58% 70% at 88% 8%, rgb(31 139 255 / 0.38) 0%, transparent 62%),
-    radial-gradient(50% 60% at 96% 62%, rgb(124 200 255 / 0.22) 0%, transparent 64%),
-    radial-gradient(46% 52% at 10% 92%, rgb(10 63 184 / 0.35) 0%, transparent 66%),
-    linear-gradient(115deg, #060d18 0%, #081435 38%, #0f1b33 68%, #0b2452 100%);
+    radial-gradient(58% 70% at 88% 8%, rgb(47 123 255 / 0.34) 0%, transparent 62%),
+    radial-gradient(50% 60% at 96% 62%, rgb(34 225 255 / 0.16) 0%, transparent 64%),
+    radial-gradient(46% 52% at 10% 92%, rgb(47 123 255 / 0.24) 0%, transparent 66%),
+    linear-gradient(115deg, #04070d 0%, #070d1a 38%, #0b1424 68%, #0b1a33 100%);
 }
 
 @utility scrollbar-slim {

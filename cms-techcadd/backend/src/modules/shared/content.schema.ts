@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 /**
- * Pieces every Zaavi content type is built from.
+ * Pieces every content type is built from.
  *
  * One definition each, because the website reads these fields the same way for
  * every type: an SEO block that accepted a 300-character title on case studies
@@ -73,7 +73,7 @@ export const iconField = z.union([z.enum(ICONS), z.literal('')]).optional()
 /**
  * Search and sharing fields.
  *
- * Limits are a little above what search engines display, as on the Zaavi CMS:
+ * Limits are a little above what search engines display:
  * the editor shows the recommended length, and refusing a title for being two
  * characters over it helps nobody.
  */

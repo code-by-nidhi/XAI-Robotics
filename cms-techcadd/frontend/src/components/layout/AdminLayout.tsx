@@ -38,7 +38,7 @@ export function AdminLayout() {
     Keeps the browser tab in step with the route.
 
     A single-page app changes the address without changing the title, so every
-    tab read "Zaavi CMS" whatever you were doing. Naming the section matters
+    tab read "XAI Robotics CMS" whatever you were doing. Naming the section matters
     most to the person with this open beside the live site, where otherwise
     every CMS tab looks identical.
   */

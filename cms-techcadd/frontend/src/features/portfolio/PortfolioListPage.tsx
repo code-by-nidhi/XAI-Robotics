@@ -100,7 +100,7 @@ export default function PortfolioListPage() {
       )}
       searchPlaceholder="Search by title, client or industry"
       emptyIcon={LayoutGrid}
-      emptyDescription="Add the first piece of work to the portfolio."
+      emptyDescription="Add the first robot build to the portfolio."
       addLabel="Add Portfolio Item"
     />
   )

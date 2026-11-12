@@ -25,7 +25,7 @@ const COLUMNS: Column<CaseStudy>[] = [
         <CoverThumb image={study.coverImage} />
         <div className="min-w-0">
           <p className="truncate font-medium text-slate-900">{study.title}</p>
-          <p className="truncate text-xs text-slate-400">{study.client || 'No client yet'}</p>
+          <p className="truncate text-xs text-slate-400">{study.client || 'No institution yet'}</p>
         </div>
       </div>
     ),
@@ -95,7 +95,7 @@ export default function CaseStudiesListPage() {
           </div>
           <div className="w-52">
             <Select
-              aria-label="Filter by service"
+              aria-label="Filter by programme"
               value={list.filters.serviceSlug ?? ''}
               onChange={(event) => list.setFilter('serviceSlug', event.target.value || undefined)}
               options={SERVICE_OPTIONS}
@@ -104,9 +104,9 @@ export default function CaseStudiesListPage() {
           </div>
         </>
       )}
-      searchPlaceholder="Search by title, client or industry"
+      searchPlaceholder="Search by title, institution or sector"
       emptyIcon={Trophy}
-      emptyDescription="Write up a project to show what XAI Robotics delivers."
+      emptyDescription="Tell the story of a school, college or partner that built robotics with XAI."
       addLabel="Add Case Study"
     />
   )

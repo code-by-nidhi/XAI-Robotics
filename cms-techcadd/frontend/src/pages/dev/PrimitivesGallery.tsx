@@ -112,7 +112,7 @@ export default function PrimitivesGallery() {
               Small
             </Button>
             <Spinner />
-            <Avatar name="Zaavi team" />
+            <Avatar name="XAI Robotics team" />
             <Tooltip content="A hint, never the only source">
               <Button variant="secondary" size="sm">
                 Hover me
@@ -198,7 +198,7 @@ export default function PrimitivesGallery() {
           </FormField>
 
           <FormField label="Slug" description="Tracks the title until edited.">
-            <SlugInput value={slug} onChange={setSlug} source={text} baseUrl="zaavi.tech/blog/" />
+            <SlugInput value={slug} onChange={setSlug} source={text} baseUrl="xairobotics.com/blog/" />
           </FormField>
 
           <FormField label="Date">

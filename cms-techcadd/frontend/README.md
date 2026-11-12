@@ -1,18 +1,21 @@
-# Zaavi CMS
+# XAI Robotics CMS
 
-Admin CMS for the Zaavi Technologies website — blogs, case studies, portfolio, careers
+Admin CMS for the XAI Robotics website — blogs, case studies, portfolio, careers
 (jobs and applications), FAQs, enquiries, media, SEO, settings and the team's accounts.
 The dashboard also carries the website traffic figures (views, top pages, enquiries by
 service, content performance).
 
-Site pages, services and the blog / case study / portfolio categories are fixed in the
-website's code, not managed here. Forms pick from the lists in `src/config/taxonomy.ts`,
-which mirror the backend's `src/modules/shared/taxonomy.ts` and the website's
-`src/lib/site/services-data.ts` — change all three together.
+Services (XAI Robotics' offerings) and the blog / case study / portfolio categories are
+fixed in code, not managed here. Forms pick from the lists in `src/config/taxonomy.ts`,
+which mirror the backend's `src/modules/shared/taxonomy.ts` — change both together.
+
+The website is a single page today: it reads FAQs and Settings and posts the contact form
+into Enquiries. Blogs, case studies, portfolio and jobs can be prepared here, but no page
+shows them yet; each of those forms says so.
 
 This app talks to the Express API in `../backend` (default `http://localhost:4000/api`,
-override with `VITE_API_URL`). "View on site" links point at the Zaavi website
-(`VITE_SITE_URL`, default `http://localhost:3001`).
+override with `VITE_API_URL`). "View on site" links point at the XAI Robotics website
+(`VITE_SITE_URL`, default `http://localhost:3000`).
 
 ---
 

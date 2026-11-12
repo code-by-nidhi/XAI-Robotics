@@ -274,7 +274,7 @@ export default function TeamPage() {
               value={draft.title}
               maxLength={120}
               onChange={(event) => setDraft((c) => ({ ...c, title: event.target.value }))}
-              placeholder="e.g. Head of AI Solutions"
+              placeholder="e.g. Lead Robotics Mentor"
             />
           </FormField>
 

@@ -1,7 +1,7 @@
-# Zaavi CMS — API
+# XAI Robotics CMS — API
 
 Express + MySQL backend for the CMS in `../frontend` and the content API the
-Zaavi Technologies website reads.
+XAI Robotics website reads (the repository root).
 
 ## Setup
 
@@ -58,7 +58,7 @@ Check it: `curl http://localhost:4000/api/health`
 | `MAX_UPLOAD_MB` | `10` | Media library limit. CVs are capped at 5 MB separately. |
 | `SMTP_*` `MAIL_FROM` | optional | Without SMTP, mail is logged to the console. |
 | `SITE_REVALIDATE_URL` `REVALIDATE_SECRET` | optional | Pings the website after a content change. |
-| `CMS_SITE` | `zaavi` | Sent as `X-CMS-Site` on every response. |
+| `CMS_SITE` | `xai` | Sent as `X-CMS-Site` on every response. |
 | `SEED_EMAIL` `SEED_USERNAME` `SEED_NAME` `SEED_PASSWORD` | optional | First administrator. |
 
 ## Scripts
@@ -73,41 +73,6 @@ Check it: `curl http://localhost:4000/api/health`
 | `npm run db:migrate` | Apply pending migrations (safe to re-run) |
 | `npm run db:seed` | Create the first administrator (idempotent) |
 | `npm run db:reset-admin <username> <password>` | Reset or recreate an administrator |
-| `npm run import:zaavi` | One-off import from the old Zaavi (Prisma) CMS; see below |
-
-### Importing from the old Zaavi CMS
-
-`npm run import:zaavi` copies everything from the website's previous built-in
-CMS into this one, straight into the database (ids, timestamps and authorship
-are kept as data, not re-created through the API):
-
-```bash
-npm run import:zaavi                                   # defaults below
-SOURCE_DB_NAME=zaavi_cms SOURCE_ROOT=../.. npm run import:zaavi
-```
-
-- **Source**: database `SOURCE_DB_NAME` (default `zaavi_cms`) on the same
-  server/credentials as `DB_*`, opened in a read-only session; files under
-  `SOURCE_ROOT` (default `../..`, the Zaavi project): `storage/uploads/YYYY/MM/*`
-  (LOCAL media), `public/images/*` (STATIC media), `storage/applications/*` (CVs).
-- **Target**: `DB_NAME`, media files into `UPLOAD_DIR` as `/uploads/<uuid>.<ext>`,
-  CVs into `PRIVATE_DIR/applications/` under their original keys.
-- **Re-runnable**: each row gets a UUID derived from its source id, and writes
-  are upserts; a target row with the same slug (email for users, slug/name for tags, path + day for page views) is updated in
-  place instead. A re-run overwrites imported rows with the source values, so
-  stop re-running once editors start working in this CMS.
-- **Users**: matched by email; an existing account (the seeded admin) keeps its
-  login. Others are created as admin (Zaavi Super Admin/Admin) or editor, with
-  no usable password (bcrypt hashes are not carried over) — the script lists
-  them; set a password from Users.
-- Times are converted from Prisma's UTC to the local time this CMS stores.
-  Embedded `/uploads/YYYY/MM/<file>` and `/images/<file>` URLs in rich HTML are
-  rewritten to the copied files. Soft-deleted rows, activity log,
-  notifications, sessions and roles are not imported, nor are services,
-  projects and categories (fixed in code now, see below): content keeps a
-  category or service slug only when it is on the fixed list. Fields with no
-  column here (galleries, case-study/portfolio tags, `focusKeyword` outside
-  blogs) are reported as warnings when they held data.
 
 ## Structure
 
@@ -182,14 +147,13 @@ scheduled | archived`.
 
 Categories and services are fixed lists in `src/modules/shared/taxonomy.ts`,
 not records: `BLOG_CATEGORIES`, `CASE_STUDY_CATEGORIES`,
-`PORTFOLIO_CATEGORIES` and `SERVICES` (the website's service pages). Content
+`PORTFOLIO_CATEGORIES` and `SERVICES` (XAI Robotics' offerings, as the contact form lists them). Content
 stores the slug — `category` on blogs, case studies and portfolio items,
 `relatedService` on blogs, `serviceSlug` on case studies — and the schemas
 refuse a slug that is not on the list (422, keyed by the field). The public
 API still answers `category: { name, slug }`, with the name from the list.
-Both lists are mirrored in the admin (`../frontend/src/config/taxonomy.ts`),
-and the services themselves live in the website
-(`src/lib/site/services-data.ts`): change all three together.
+The lists are mirrored in the admin (`../frontend/src/config/taxonomy.ts`):
+change both together.
 
 Image slots are `{ id, url?, alt?, width?, height? }`; `null` removes one, an
 absent key leaves it alone. An empty string clears an optional id or text.
@@ -233,12 +197,12 @@ These are deliberate, not incidental:
 - Unknown account and wrong password return the **same message**.
 - `/auth/forgot-password` **always returns 204**.
 - Password reset stores a **SHA-256 hash of the token**, never the token.
-- Sessions are **httpOnly, SameSite=Lax, signed cookies** (`zaavi_cms_session`).
+- Sessions are **httpOnly, SameSite=Lax, signed cookies** (`xai_cms_session`).
 - Changing a password **revokes other sessions** but keeps the current one.
 - `requireRole()` enforces permissions **server-side**.
 - Sort and filter columns are **whitelisted**.
 - Enquiries need an admin **and** the shared enquiries password
-  (`zaavi_enquiries_unlock` cookie, 12 h). The dashboard and search only show
+  (`xai_enquiries_unlock` cookie, 12 h). The dashboard and search only show
   lead names to a browser that has cleared it.
 - CVs live under `PRIVATE_DIR`, are accepted by **magic bytes**, stored under
   random names, and only downloadable by an admin as an attachment.

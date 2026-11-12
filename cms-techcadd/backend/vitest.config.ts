@@ -12,10 +12,10 @@ import { defineConfig } from 'vitest/config'
  * shells do not understand. `scripts/prepare-test-db.mjs` creates it, and
  * tests/helpers.ts refuses to run if this has not taken effect.
  */
-process.env.DB_NAME = process.env.TEST_DB_NAME ?? `${process.env.DB_NAME ?? 'zaavi_content'}_test`
+process.env.DB_NAME = process.env.TEST_DB_NAME ?? `${process.env.DB_NAME ?? 'xai_content'}_test`
 
 // CVs uploaded by the tests go somewhere disposable, not into the checkout.
-process.env.PRIVATE_DIR = join(tmpdir(), 'zaavi-cms-test-private')
+process.env.PRIVATE_DIR = join(tmpdir(), 'xai-cms-test-private')
 
 export default defineConfig({
   test: {

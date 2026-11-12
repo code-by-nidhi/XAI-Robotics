@@ -100,7 +100,7 @@ export default function SettingsPage() {
     <div className="space-y-6">
       <PageHeader
         title="Settings"
-        description="Company details, social links, search defaults and alert emails"
+        description="XAI Robotics’ contact details, social links, search defaults and alert emails"
       />
 
       {settings.isLoading ? (

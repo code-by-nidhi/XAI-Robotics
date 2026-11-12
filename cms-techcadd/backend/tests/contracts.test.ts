@@ -40,11 +40,11 @@ describe('absent means leave alone, empty means clear', () => {
     const study = await api.post('/case-studies', {
       title: 'Probe study',
       slug: 'probe-study',
-      category: 'generative-ai',
-      serviceSlug: 'rag-solutions',
+      category: 'colleges-universities',
+      serviceSlug: 'robotics-programme',
     })
-    expect(study.body.category).toBe('generative-ai')
-    expect(study.body.serviceSlug).toBe('rag-solutions')
+    expect(study.body.category).toBe('colleges-universities')
+    expect(study.body.serviceSlug).toBe('robotics-programme')
 
     const cleared = await api.patch(`/case-studies/${study.body.id}`, { category: '', serviceSlug: '' })
     expect(cleared.status).toBe(200)
@@ -98,7 +98,7 @@ describe('partial updates', () => {
       title: 'Ordered',
       slug: 'ordered',
       summary: 'A summary that is long enough to publish.',
-      category: 'generative-ai',
+      category: 'robotic-arms',
       state: 'inactive',
       status: 'published',
     })
@@ -108,7 +108,7 @@ describe('partial updates', () => {
     expect(reordered.body.sortOrder).toBe(5)
     expect(reordered.body.status).toBe('published')
     expect(reordered.body.state).toBe('inactive')
-    expect(reordered.body.category).toBe('generative-ai')
+    expect(reordered.body.category).toBe('robotic-arms')
   })
 
   it('keeps a published item published when another field is edited', async () => {
@@ -116,7 +116,7 @@ describe('partial updates', () => {
       title: 'Live item',
       slug: 'live-item',
       summary: 'A summary that is long enough to publish.',
-      category: 'automation-agents',
+      category: 'mobile-robots',
       status: 'published',
     })
     const edited = await api.patch(`/portfolio/${item.body.id}`, { duration: '6 weeks' })
@@ -187,14 +187,14 @@ describe('rich text', () => {
 
 describe('categories and services', () => {
   it('must be on the fixed list for the content type they file', async () => {
-    // 'cloud-infrastructure' is a portfolio category, not a blog one.
-    const res = await api.post('/blogs', { title: 'Misfiled', slug: 'misfiled', category: 'cloud-infrastructure' })
+    // 'aerial-systems' is a portfolio category, not a blog one.
+    const res = await api.post('/blogs', { title: 'Misfiled', slug: 'misfiled', category: 'aerial-systems' })
     expect(res.status).toBe(422)
     expect(res.body.fieldErrors?.category).toBeTruthy()
 
-    const filed = await api.post('/blogs', { title: 'Filed', slug: 'filed', category: 'security' })
+    const filed = await api.post('/blogs', { title: 'Filed', slug: 'filed', category: 'embedded-systems' })
     expect(filed.status).toBe(201)
-    expect(filed.body.category).toBe('security')
+    expect(filed.body.category).toBe('embedded-systems')
   })
 
   it("refuses a service that is not one of the website's", async () => {
@@ -208,12 +208,12 @@ describe('categories and services', () => {
   })
 
   it('filters admin lists by category and service', async () => {
-    await api.post('/blogs', { title: 'Strategy', slug: 'strategy', category: 'ai-strategy', relatedService: 'ai-consulting' })
-    await api.post('/blogs', { title: 'Other', slug: 'other', category: 'delivery' })
+    await api.post('/blogs', { title: 'Strategy', slug: 'strategy', category: 'robotics-engineering', relatedService: 'robotics-programme' })
+    await api.post('/blogs', { title: 'Other', slug: 'other', category: 'student-projects' })
 
-    const byCategory = await api.get('/blogs?category=ai-strategy')
+    const byCategory = await api.get('/blogs?category=robotics-engineering')
     expect(byCategory.body.items.map((b: any) => b.slug)).toEqual(['strategy'])
-    const byService = await api.get('/blogs?relatedService=ai-consulting')
+    const byService = await api.get('/blogs?relatedService=robotics-programme')
     expect(byService.body.items.map((b: any) => b.slug)).toEqual(['strategy'])
   })
 })

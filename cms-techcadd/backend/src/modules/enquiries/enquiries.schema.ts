@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { optionalId } from '../shared/content.schema.js'
 
-/** Zaavi's inquiry pipeline. Opening a new enquiry in the CMS marks it read. */
+/** The enquiry pipeline. Opening a new enquiry in the CMS marks it read. */
 export const ENQUIRY_STATUSES = ['new', 'read', 'in_progress', 'resolved', 'archived'] as const
 
 /**

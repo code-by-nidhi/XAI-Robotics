@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
-import { CircleHelp, MoreHorizontal, Pencil, Plus, Star, Trash2 } from 'lucide-react'
+import { CircleHelp, MoreHorizontal, Pencil, Plus, Trash2 } from 'lucide-react'
 
 import { ApiError, faqCategoriesApi, type ListParams } from '../../api'
 import { Badge, ContentStatusBadge } from '../../components/common/Badge'
@@ -19,7 +19,7 @@ import type { Faq } from '../../types'
 import { REVIEW_STATUS_OPTIONS } from '../shared/statusOptions'
 import { faqHooks } from './useFaqs'
 
-const FILTER_KEYS = ['categoryId', 'status', 'featured'] as const
+const FILTER_KEYS = ['categoryId', 'status'] as const
 
 /**
  * Every question at once.
@@ -49,7 +49,6 @@ export default function FaqsListPage() {
     queryKey: ['faqs', 'categories'],
     queryFn: () => faqCategoriesApi.list(),
   })
-  const update = faqHooks.useUpdate()
   const remove = faqHooks.useRemove()
 
   const [selectedIds, setSelectedIds] = useState<string[]>([])
@@ -83,15 +82,6 @@ export default function FaqsListPage() {
     }
   }
 
-  async function toggleFeatured(faq: Faq) {
-    try {
-      await update.mutateAsync({ id: faq.id, input: { featured: !faq.featured } })
-      toast.success(faq.featured ? 'Removed from the homepage.' : 'Added to the homepage.')
-    } catch {
-      toast.error('Could not update this question')
-    }
-  }
-
   const columns: Column<Faq>[] = [
     {
       id: 'question',
@@ -109,12 +99,6 @@ export default function FaqsListPage() {
       cell: (faq) => <Badge tone="neutral">{faq.category}</Badge>,
     },
     {
-      id: 'featured',
-      header: 'Homepage',
-      cell: (faq) =>
-        faq.featured ? <Badge tone="primary">Featured</Badge> : <span className="text-slate-400">—</span>,
-    },
-    {
       id: 'status',
       header: 'Status',
       cell: (faq) => <ContentStatusBadge status={faq.status} />,
@@ -125,7 +109,7 @@ export default function FaqsListPage() {
     <div className="space-y-6">
       <PageHeader
         title="FAQ"
-        description="Questions the centre answers on the phone, grouped by section"
+        description="The questions in the homepage’s “Frequently asked questions” section, in the order shown here"
         actions={
           <Link to="/faqs/new">
             <Button icon={Plus}>Add question</Button>
@@ -159,17 +143,6 @@ export default function FaqsListPage() {
                 placeholder="All statuses"
                 value={list.filters.status ?? ''}
                 onChange={(event) => list.setFilter('status', event.target.value || undefined)}
-              />
-              <Select
-                className="h-9 w-auto min-w-32"
-                aria-label="Filter by homepage"
-                options={[
-                  { value: '1', label: 'On the homepage' },
-                  { value: '0', label: 'Not on the homepage' },
-                ]}
-                placeholder="All"
-                value={list.filters.featured ?? ''}
-                onChange={(event) => list.setFilter('featured', event.target.value || undefined)}
               />
             </>
           }
@@ -219,7 +192,7 @@ export default function FaqsListPage() {
           emptyDescription={
             narrowed
               ? 'Try a different search term or clear the filters.'
-              : 'Add the questions people ask most and they will appear on the site.'
+              : 'Add the questions students, parents and institutions ask most. Published ones appear on the homepage.'
           }
           rowActions={(faq) => (
             <DropdownMenu
@@ -231,9 +204,6 @@ export default function FaqsListPage() {
             >
               <DropdownItem icon={Pencil} onSelect={() => navigate(`/faqs/${faq.id}/edit`)}>
                 Edit
-              </DropdownItem>
-              <DropdownItem icon={Star} onSelect={() => toggleFeatured(faq)}>
-                {faq.featured ? 'Remove from homepage' : 'Show on homepage'}
               </DropdownItem>
               <DropdownSeparator />
               <DropdownItem

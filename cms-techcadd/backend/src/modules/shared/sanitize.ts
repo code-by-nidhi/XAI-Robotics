@@ -8,7 +8,7 @@ import sanitizeHtml from 'sanitize-html'
  * out means every reader — the site, the public API, a future export — gets the
  * same safe markup without having to remember to clean it themselves.
  *
- * The allow-list is the Zaavi website's own (src/server/content/sanitize.ts):
+ * The allow-list of tags and attributes rich text may keep:
  * only the formatting the editor can produce survives. Scripts, event
  * handlers, inline styles and unknown embeds are removed; video embeds are
  * limited to YouTube's players.

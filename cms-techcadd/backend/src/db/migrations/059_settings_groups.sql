@@ -1,4 +1,4 @@
--- Settings become the four groups the Zaavi website reads:
+-- Settings become the four groups the website reads:
 --   general  business details for the footer and contact page
 --   social   profile links
 --   seo      default title / description, and whether search engines may index

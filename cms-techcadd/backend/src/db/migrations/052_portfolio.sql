@@ -1,6 +1,6 @@
 -- Portfolio items (/portfolio and /portfolio/<slug>).
 --
--- `state` is separate from `status` on purpose, as in Zaavi: status is the
+-- `state` is separate from `status` on purpose: status is the
 -- publishing lifecycle, state is whether the piece is still shown at all. An
 -- old project can be taken off the portfolio without unpublishing it — which
 -- would also break any link to it — and put back later unchanged.

@@ -3,7 +3,7 @@ import { unprocessable } from '../../http/errors.js'
 import type { ContentStatus } from './content.schema.js'
 
 /**
- * The publishing rules every content type shares, as on the Zaavi CMS.
+ * The publishing rules every content type shares.
  *
  *   draft      not on the site
  *   published  on the site; published_at is set the first time and then kept,

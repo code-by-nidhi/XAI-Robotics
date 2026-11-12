@@ -202,13 +202,13 @@ export default function BlogsListPage() {
               </div>
               <div className="w-52">
                 <Select
-                  aria-label="Filter by related service"
+                  aria-label="Filter by related programme"
                   value={list.filters.relatedService ?? ''}
                   onChange={(event) =>
                     list.setFilter('relatedService', event.target.value || undefined)
                   }
                   options={SERVICE_OPTIONS}
-                  placeholder="Any related service"
+                  placeholder="Any programme"
                 />
               </div>
             </>

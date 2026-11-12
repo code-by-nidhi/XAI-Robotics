@@ -1,4 +1,4 @@
--- Categories become per content type, as on the Zaavi website.
+-- Categories become per content type, as the website files them.
 --
 -- Blog posts, case studies, portfolio items, projects and services each have
 -- their own set of categories: "Healthcare" as a portfolio filter and

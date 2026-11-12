@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-/** The hiring pipeline, as on the Zaavi CMS. */
+/** The hiring pipeline. */
 export const APPLICATION_STATUSES = [
   'new', 'reviewing', 'shortlisted', 'interview', 'offered', 'hired', 'rejected', 'archived',
 ] as const

@@ -16,7 +16,7 @@ import {
 import { CASE_STUDY_CATEGORIES, categoryField, serviceField } from '../shared/taxonomy.js'
 
 /**
- * A case study. Mirrors the Zaavi CMS: a draft needs only a title and slug;
+ * A case study. A draft needs only a title and slug;
  * the client, summary and story are checked when it goes live.
  */
 const base = z.object({

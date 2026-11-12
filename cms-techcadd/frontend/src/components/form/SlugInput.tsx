@@ -10,7 +10,7 @@ interface SlugInputProps {
   onChange: (value: string) => void
   /** The title this slug tracks until the user takes manual control. */
   source: string
-  /** Prefix shown before the slug, e.g. "zaavi.tech/blog/". */
+  /** Prefix shown before the slug, e.g. "xairobotics.com/blog/". */
   baseUrl?: string
   /**
    * Whether the slug follows the source as it is typed. Off when editing a

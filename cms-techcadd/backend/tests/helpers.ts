@@ -167,7 +167,7 @@ export async function resetTables(...tables: string[]): Promise<void> {
  */
 export async function resetUsers(): Promise<void> {
   await pool.query('DELETE FROM users WHERE email <> ?', [ADMIN_EMAIL])
-  await pool.query("UPDATE users SET name = 'Zaavi Admin', active = 1 WHERE email = ?", [
+  await pool.query("UPDATE users SET name = 'XAI Admin', active = 1 WHERE email = ?", [
     ADMIN_EMAIL,
   ])
 }

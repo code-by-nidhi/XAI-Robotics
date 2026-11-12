@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 /**
- * The four settings groups the Zaavi website reads, one schema each.
+ * The four settings groups the XAI Robotics website reads, one schema each.
  *
  * Every field is required in the group's shape and every group optional in a
  * request: a settings card saves its own group, and the stored group is merged

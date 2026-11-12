@@ -7,7 +7,7 @@ import { SERVICES } from '../shared/taxonomy.js'
 
 /**
  * Website traffic from the page_views counters, alongside enquiries and
- * publishing — modelled on the Zaavi CMS's Analytics page. All days are UTC.
+ * publishing. All days are UTC.
  */
 
 export const RANGES = [7, 30, 90] as const

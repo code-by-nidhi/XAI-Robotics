@@ -5,12 +5,13 @@ import { z } from 'zod'
  * the website's services.
  *
  * Kept in code rather than in tables because they change about once a year,
- * and because the website owns the services themselves
- * (src/lib/site/services-data.ts on the site) — a CMS copy that could be
- * edited would only drift from it. Three copies have to agree, so a change
- * here means the same change in:
- *   - the website:   src/lib/site/services-data.ts (the services)
- *   - the CMS admin: cms-techcadd/frontend/src/config/taxonomy.ts (everything)
+ * and because they mirror the XAI Robotics website — a CMS copy that could
+ * be edited would only drift from it. Two copies have to agree, so a change
+ * here means the same change in the CMS admin:
+ * cms-techcadd/frontend/src/config/taxonomy.ts.
+ *
+ * SERVICES are the site's offerings, as its contact form's "I'm interested
+ * in" list names them; categories follow its curriculum and its 12 builds.
  *
  * Content stores the slug. The names are what the website prints, so the
  * public API looks them up here rather than storing them on each row.
@@ -22,38 +23,38 @@ export interface Category {
 }
 
 export const BLOG_CATEGORIES: readonly Category[] = [
-  { slug: 'ai-strategy', name: 'AI Strategy' },
-  { slug: 'delivery', name: 'Delivery' },
-  { slug: 'generative-ai', name: 'Generative AI' },
-  { slug: 'security', name: 'Security' },
+  { slug: 'robotics-engineering', name: 'Robotics Engineering' },
+  { slug: 'embedded-systems', name: 'Embedded Systems' },
+  { slug: 'ai-computer-vision', name: 'AI & Computer Vision' },
+  { slug: 'ros-simulation', name: 'ROS & Simulation' },
+  { slug: 'student-projects', name: 'Student Projects' },
+  { slug: 'events-workshops', name: 'Events & Workshops' },
 ]
 
 export const CASE_STUDY_CATEGORIES: readonly Category[] = [
-  { slug: 'automation-agents', name: 'Automation & Agents' },
-  { slug: 'chatbots-assistants', name: 'Chatbots & Assistants' },
-  { slug: 'generative-ai', name: 'Generative AI' },
-  { slug: 'machine-learning-analytics', name: 'Machine Learning & Analytics' },
+  { slug: 'schools', name: 'Schools' },
+  { slug: 'colleges-universities', name: 'Colleges & Universities' },
+  { slug: 'franchise-partners', name: 'Franchise Partners' },
+  { slug: 'industry-partners', name: 'Industry Partners' },
 ]
 
 export const PORTFOLIO_CATEGORIES: readonly Category[] = [
-  { slug: 'automation-agents', name: 'Automation & Agents' },
-  { slug: 'chatbots-assistants', name: 'Chatbots & Assistants' },
-  { slug: 'cloud-infrastructure', name: 'Cloud & Infrastructure' },
-  { slug: 'generative-ai', name: 'Generative AI' },
-  { slug: 'machine-learning-analytics', name: 'Machine Learning & Analytics' },
+  { slug: 'mobile-robots', name: 'Mobile Robots & Rovers' },
+  { slug: 'robotic-arms', name: 'Robotic Arms & Manipulators' },
+  { slug: 'legged-robots', name: 'Legged Robots' },
+  { slug: 'balancing-control', name: 'Balancing & Control Systems' },
+  { slug: 'aerial-systems', name: 'Aerial & Flight Systems' },
+  { slug: 'swarm-autonomy', name: 'Swarm & Autonomy' },
 ]
 
-/** The website's service pages, in its menu order; `title` is the menu name. */
+/** XAI Robotics' offerings, in the contact form's order; `title` is what editors see. */
 export const SERVICES: readonly { slug: string; title: string }[] = [
-  { slug: 'ai-consulting', title: 'AI Consulting' },
-  { slug: 'generative-ai-solutions', title: 'Generative AI' },
-  { slug: 'ai-automation', title: 'AI Automation & Agents' },
-  { slug: 'machine-learning', title: 'Machine Learning & Predictive Analytics' },
-  { slug: 'ai-chatbot-development', title: 'AI Chatbots' },
-  { slug: 'rag-solutions', title: 'RAG Knowledge Assistants' },
-  { slug: 'ai-integration', title: 'AI Integration' },
-  { slug: 'cloud-services', title: 'Cloud Infrastructure & Migration' },
-  { slug: 'telecom-solutions', title: 'Telecom & Network Optimisation' },
+  { slug: 'robotics-programme', title: '6-Month Robotics Programme' },
+  { slug: 'robotics-projects', title: 'Robotics Projects' },
+  { slug: 'rnd-lab', title: 'R&D Lab' },
+  { slug: 'workshops-events', title: 'Workshops & Events' },
+  { slug: 'franchise-b2b', title: 'Franchise & B2B' },
+  { slug: 'lab-tour', title: 'Free Lab Tour' },
 ]
 
 /** A slug from `list`, or '' for none — the form sends '' to clear it. */

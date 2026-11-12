@@ -1,7 +1,7 @@
--- Blog posts take the Zaavi publishing model and SEO fields.
+-- Blog posts take the shared publishing model and SEO fields.
 --
 -- Status: draft | published | scheduled | archived. "review" had no reviewer
--- workflow behind it and Zaavi has none, so those posts become drafts. A
+-- workflow behind it and the new model has none, so those posts become drafts. A
 -- scheduled post is public once its publish_at has passed — the public queries
 -- check the time themselves, so nothing has to run at that moment.
 --
@@ -28,7 +28,7 @@ UPDATE blogs
 ALTER TABLE blogs DROP COLUMN publish_date;
 ALTER TABLE blogs ADD KEY idx_blogs_status_publish (status, publish_at);
 
--- Zaavi allows a longer summary than the old 300 characters, and a draft may be
+-- The website allows a longer summary than the old 300 characters, and a draft may be
 -- saved before the excerpt is written.
 ALTER TABLE blogs MODIFY COLUMN excerpt VARCHAR(320) NOT NULL DEFAULT '';
 

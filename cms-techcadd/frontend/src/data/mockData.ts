@@ -1,4 +1,4 @@
-import { Briefcase, Images, Inbox, LayoutGrid, Mail, PenSquare, Trophy } from 'lucide-react'
+import { Briefcase, CircleHelp, Images, Inbox, LayoutGrid, Mail, PenSquare, Settings, Trophy } from 'lucide-react'
 
 import type { QuickAction, WebsiteStatus } from '../types'
 
@@ -12,24 +12,46 @@ import type { QuickAction, WebsiteStatus } from '../types'
 
 /** Navigation shortcuts. */
 export const quickActions: QuickAction[] = [
+  // First the three the XAI Robotics homepage reads today.
+  {
+    id: 'view-enquiries',
+    label: 'View Enquiries',
+    description: 'Leads from the homepage contact form',
+    icon: Mail,
+    path: '/enquiries',
+  },
+  {
+    id: 'edit-faqs',
+    label: 'Edit FAQs',
+    description: 'The homepage’s frequently asked questions',
+    icon: CircleHelp,
+    path: '/faqs',
+  },
+  {
+    id: 'edit-contact',
+    label: 'Update Contact Details',
+    description: 'Email, locations and social links on the site',
+    icon: Settings,
+    path: '/settings',
+  },
   {
     id: 'add-blog',
     label: 'Write a Blog Post',
-    description: 'Publish an article or insight',
+    description: 'Lab news, tutorials and student stories',
     icon: PenSquare,
     path: '/blogs/new',
   },
   {
     id: 'add-case-study',
     label: 'Add a Case Study',
-    description: 'Tell the story of a client project',
+    description: 'A school, college or partner success story',
     icon: Trophy,
     path: '/case-studies/new',
   },
   {
     id: 'add-portfolio',
     label: 'Add Portfolio Item',
-    description: 'Showcase delivered work',
+    description: 'Showcase a robot build',
     icon: LayoutGrid,
     path: '/portfolio/new',
   },
@@ -39,13 +61,6 @@ export const quickActions: QuickAction[] = [
     description: 'Open a position on the careers page',
     icon: Briefcase,
     path: '/jobs/new',
-  },
-  {
-    id: 'view-enquiries',
-    label: 'View Enquiries',
-    description: 'Reply to incoming leads',
-    icon: Mail,
-    path: '/enquiries',
   },
   {
     id: 'view-applications',

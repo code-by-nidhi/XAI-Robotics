@@ -10,7 +10,6 @@ import { Button } from '../../components/common/Button'
 import { Card, CardBody, CardHeader } from '../../components/common/Card'
 import { Alert } from '../../components/feedback/Alert'
 import { Spinner } from '../../components/feedback/Spinner'
-import { Checkbox } from '../../components/form/Checkbox'
 import { FormField } from '../../components/form/FormField'
 import { Input } from '../../components/form/Input'
 import { NumberInput } from '../../components/form/NumberInput'
@@ -107,7 +106,7 @@ export default function FaqFormPage() {
       re-file the question under whatever happened to be first.
     */
     if (currentCategory && !options.some((option) => option.value === currentCategory)) {
-      options.unshift({ value: currentCategory, label: `${currentCategory} (no tab — shows under General)` })
+      options.unshift({ value: currentCategory, label: `${currentCategory} (no longer listed)` })
     }
 
     return options
@@ -207,14 +206,14 @@ export default function FaqFormPage() {
               <FormField label="Question" required error={errors.question?.message}>
                 <Input
                   {...register('question')}
-                  placeholder="e.g. How long does an AI project take?"
+                  placeholder="e.g. Do I need to know coding before I start?"
                 />
               </FormField>
 
               <FormField
                 label="Answer"
                 required
-                description="Plain text. Keep it to what someone needs on the phone."
+                description="Plain text. Line breaks are kept on the website."
                 error={errors.answer?.message}
               >
                 <Textarea {...register('answer')} rows={6} />
@@ -234,7 +233,7 @@ export default function FaqFormPage() {
               <FormField
                 label="Category"
                 required
-                description="The tabs on the website's FAQ page."
+                description="Groups questions in the CMS. The website lists every published question, category by category."
                 error={errors.categoryName?.message}
               >
                 <Select
@@ -248,7 +247,7 @@ export default function FaqFormPage() {
 
               <FormField
                 label="Order"
-                description="Lower numbers come first within the category."
+                description="Lower numbers come first within the category, on the website too."
                 error={errors.order?.message}
               >
                 <Controller
@@ -264,18 +263,6 @@ export default function FaqFormPage() {
                 />
               </FormField>
 
-              <Controller
-                control={control}
-                name="featured"
-                render={({ field }) => (
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    label="Show on the homepage"
-                    description="The homepage shows a short selection, not every question."
-                  />
-                )}
-              />
             </CardBody>
           </Card>
         </div>

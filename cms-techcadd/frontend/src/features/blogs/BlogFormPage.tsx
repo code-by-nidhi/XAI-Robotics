@@ -83,7 +83,7 @@ export default function BlogFormPage() {
             />
             <CardBody className="space-y-5">
               <FormField label="Title" required error={errors.title?.message}>
-                <Input {...register('title')} placeholder="e.g. What RAG changes for support teams" />
+                <Input {...register('title')} placeholder="e.g. How we built a self-balancing robot" />
               </FormField>
 
               <FormField label="URL slug" required error={errors.slug?.message}>
@@ -158,8 +158,8 @@ export default function BlogFormPage() {
               </FormField>
 
               <FormField
-                label="Related service"
-                description="Promoted in the article’s sidebar."
+                label="Related programme"
+                description="The XAI Robotics offering this article is about."
                 error={errors.relatedService?.message}
               >
                 <Controller

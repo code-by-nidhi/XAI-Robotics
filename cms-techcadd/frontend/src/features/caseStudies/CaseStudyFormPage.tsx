@@ -31,10 +31,10 @@ import { caseStudyHooks } from './useCaseStudies'
 
 /** The story sections, in the order the case study page prints them. */
 const STORY: { name: 'overview' | 'challenge' | 'approach' | 'solution' | 'implementation'; label: string; hint: string }[] = [
-  { name: 'overview', label: 'Overview', hint: 'Who the client is and what they needed.' },
-  { name: 'challenge', label: 'Challenge', hint: 'The problem, in the client’s terms.' },
+  { name: 'overview', label: 'Overview', hint: 'Who the institution or partner is and what they needed.' },
+  { name: 'challenge', label: 'Challenge', hint: 'The problem, in their own terms.' },
   { name: 'approach', label: 'Approach', hint: 'How the work was planned.' },
-  { name: 'solution', label: 'Solution', hint: 'What was built.' },
+  { name: 'solution', label: 'Solution', hint: 'What was built: the lab, the robots, the curriculum.' },
   { name: 'implementation', label: 'Implementation', hint: 'How it was rolled out.' },
 ]
 
@@ -108,18 +108,18 @@ export default function CaseStudyFormPage() {
               <div className="grid gap-5 sm:grid-cols-2">
                 <FormField
                   label="Client"
-                  description="Can stay anonymous, e.g. “Regional retailer”."
+                  description="Can stay anonymous, e.g. “CBSE school, Chandigarh”."
                   error={errors.client?.message}
                 >
                   <Input {...register('client')} />
                 </FormField>
                 <FormField label="Industry" error={errors.industry?.message}>
-                  <Input {...register('industry')} placeholder="e.g. Manufacturing" />
+                  <Input {...register('industry')} placeholder="e.g. School education" />
                 </FormField>
               </div>
 
               <FormField label="Duration" error={errors.duration?.message}>
-                <Input {...register('duration')} placeholder="e.g. 10 weeks" />
+                <Input {...register('duration')} placeholder="e.g. 6 months" />
               </FormField>
 
               <FormField
@@ -190,7 +190,7 @@ export default function CaseStudyFormPage() {
                   <Input {...register('testimonialName')} />
                 </FormField>
                 <FormField label="Role" error={errors.testimonialRole?.message}>
-                  <Input {...register('testimonialRole')} placeholder="e.g. Head of Customer Service" />
+                  <Input {...register('testimonialRole')} placeholder="e.g. Principal" />
                 </FormField>
               </div>
             </CardBody>
@@ -214,8 +214,8 @@ export default function CaseStudyFormPage() {
             <CardHeader title="Case study settings" />
             <CardBody className="space-y-5">
               <FormField
-                label="Service used"
-                description="Linked from the case study and used to group it in the portfolio."
+                label="Programme"
+                description="The XAI Robotics offering this story is about."
                 error={errors.serviceSlug?.message}
               >
                 <Controller
@@ -240,7 +240,7 @@ export default function CaseStudyFormPage() {
                   control={control}
                   name="technologies"
                   render={({ field }) => (
-                    <TagInput value={field.value} onChange={field.onChange} maxTags={20} placeholder="e.g. RAG, Private cloud" />
+                    <TagInput value={field.value} onChange={field.onChange} maxTags={20} placeholder="e.g. ROS 2, OpenCV" />
                   )}
                 />
               </FormField>

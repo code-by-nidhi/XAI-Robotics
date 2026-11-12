@@ -93,7 +93,7 @@ async function loadNotes(ids: string[]): Promise<Map<string, unknown[]>> {
 }
 
 export async function list(params: ListParams): Promise<ListResult<unknown>> {
-  // As on the Zaavi inbox: archived enquiries are out of the way unless asked
+  // Archived enquiries are out of the way unless asked
   // for (by status, or status=all), so "clear the inbox" does not mean
   // "delete the record".
   const filters = { ...params.filters }
@@ -118,7 +118,7 @@ export async function list(params: ListParams): Promise<ListResult<unknown>> {
   }
 }
 
-/** One enquiry. Opening a new one in the CMS marks it read, as on Zaavi. */
+/** One enquiry. Opening a new one in the CMS marks it read. */
 export async function get(id: string, markRead = false): Promise<unknown> {
   if (markRead) {
     await execute("UPDATE enquiries SET status = 'read', updated_at = NOW(3) WHERE id = ? AND status = 'new'", [id])

@@ -77,28 +77,28 @@ describe('visibility', () => {
   it('links a portfolio item to its case study only while that is public', async () => {
     const study = await api.post('/case-studies', { title: 'Study', slug: 'study' })
     await api.post('/portfolio', {
-      title: 'Piece', slug: 'piece', summary: 'A summary that is long enough.', category: 'generative-ai',
+      title: 'Piece', slug: 'piece', summary: 'A summary that is long enough.', category: 'robotic-arms',
       caseStudyId: study.body.id, status: 'published',
     })
     expect((await visitor.get('/public/portfolio/piece')).body.caseStudy).toBeNull()
   })
 
   it('names categories from the fixed list, as the website reads them', async () => {
-    await publishedPost('filed', { category: 'ai-strategy', relatedService: 'ai-consulting' })
+    await publishedPost('filed', { category: 'robotics-engineering', relatedService: 'robotics-programme' })
     const post = (await visitor.get('/public/blogs/filed')).body
-    expect(post.category).toEqual({ name: 'AI Strategy', slug: 'ai-strategy' })
-    expect(post.relatedService).toBe('ai-consulting')
-    expect((await visitor.get('/public/blogs?category=ai-strategy')).body.items.map((p: any) => p.slug)).toEqual(['filed'])
+    expect(post.category).toEqual({ name: 'Robotics Engineering', slug: 'robotics-engineering' })
+    expect(post.relatedService).toBe('robotics-programme')
+    expect((await visitor.get('/public/blogs?category=robotics-engineering')).body.items.map((p: any) => p.slug)).toEqual(['filed'])
     // By name too, as before the categories were fixed.
-    expect((await visitor.get('/public/blogs?category=AI%20Strategy')).body.total).toBe(1)
+    expect((await visitor.get('/public/blogs?category=Robotics%20Engineering')).body.total).toBe(1)
 
     await api.post('/portfolio', {
-      title: 'Agent', slug: 'agent', summary: 'A summary that is long enough.', category: 'automation-agents', status: 'published',
+      title: 'Agent', slug: 'agent', summary: 'A summary that is long enough.', category: 'mobile-robots', status: 'published',
     })
     const list = (await visitor.get('/public/portfolio')).body
-    expect(list.items[0].category).toEqual({ name: 'Automation & Agents', slug: 'automation-agents' })
+    expect(list.items[0].category).toEqual({ name: 'Mobile Robots & Rovers', slug: 'mobile-robots' })
     // Only categories something is filed under, in the list's order.
-    expect(list.categories).toEqual([{ name: 'Automation & Agents', slug: 'automation-agents' }])
+    expect(list.categories).toEqual([{ name: 'Mobile Robots & Rovers', slug: 'mobile-robots' }])
   })
 })
 

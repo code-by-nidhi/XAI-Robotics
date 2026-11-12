@@ -97,7 +97,7 @@ export default function JobFormPage() {
             <CardHeader title="Role" />
             <CardBody className="space-y-5">
               <FormField label="Job title" required error={errors.title?.message}>
-                <Input {...register('title')} placeholder="e.g. Senior ML Engineer" />
+                <Input {...register('title')} placeholder="e.g. Robotics Trainer" />
               </FormField>
 
               <FormField label="URL slug" required error={errors.slug?.message}>
@@ -118,7 +118,7 @@ export default function JobFormPage() {
 
               <div className="grid gap-5 sm:grid-cols-2">
                 <FormField label="Department" error={errors.department?.message}>
-                  <Input {...register('department')} placeholder="e.g. Engineering" />
+                  <Input {...register('department')} placeholder="e.g. Training" />
                 </FormField>
                 <FormField label="Location" error={errors.location?.message}>
                   <Input {...register('location')} placeholder="e.g. Chandigarh" />
@@ -133,7 +133,7 @@ export default function JobFormPage() {
                   <Input {...register('experience')} placeholder="e.g. 3–5 years" />
                 </FormField>
                 <FormField label="Salary" description="Leave empty to not show one." error={errors.salary?.message}>
-                  <Input {...register('salary')} placeholder="e.g. ₹18–24 LPA" />
+                  <Input {...register('salary')} placeholder="e.g. ₹4–6 LPA" />
                 </FormField>
               </div>
 

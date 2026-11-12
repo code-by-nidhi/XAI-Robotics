@@ -51,7 +51,7 @@ export interface ContentSpec {
 /**
  * List / get / create / update / remove for a content table.
  *
- * The five new Zaavi types share every rule — unique slug, publish checks on
+ * The content types share every rule — unique slug, publish checks on
  * the merged record, status columns, old-slug redirects — and differ only in
  * their fields. Declaring the differences and deriving the rest keeps those
  * rules identical across types, which is what the website relies on.

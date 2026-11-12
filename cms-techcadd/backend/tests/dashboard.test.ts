@@ -67,7 +67,7 @@ describe('dashboard summary', () => {
   it('adds up content by status across tables', async () => {
     await api.post('/portfolio', {
       title: 'Live piece', slug: 'live-piece', summary: 'A summary that is comfortably long enough.',
-      category: 'generative-ai', status: 'published',
+      category: 'robotic-arms', status: 'published',
     })
     await api.post('/case-studies', { title: 'Hidden', slug: 'hidden' })
 

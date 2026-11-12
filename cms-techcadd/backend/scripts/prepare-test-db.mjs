@@ -58,7 +58,7 @@ const username = process.env.TEST_ADMIN_USERNAME ?? 'admin'
 
 await connection.query(
   `INSERT INTO users (id, name, email, username, password_hash, role, active, created_at, updated_at)
-   VALUES (?, 'Zaavi Admin', ?, ?, ?, 'admin', 1, NOW(3), NOW(3))`,
+   VALUES (?, 'XAI Admin', ?, ?, ?, 'admin', 1, NOW(3), NOW(3))`,
   [randomUUID(), email, username, await argon2.hash(password, { type: argon2.argon2id, memoryCost: 19456, timeCost: 2 })],
 )
 

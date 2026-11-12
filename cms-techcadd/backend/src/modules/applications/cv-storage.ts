@@ -22,7 +22,7 @@ const root = () => resolve(config.PRIVATE_DIR, 'applications')
 /**
  * Accepted by content, not by name or declared type, both of which the
  * uploader controls. A .docx is a zip, so its magic bytes alone would also
- * admit any zip; the extension narrows it, as on the Zaavi site.
+ * admit any zip; the extension narrows it.
  */
 const KINDS = [
   {

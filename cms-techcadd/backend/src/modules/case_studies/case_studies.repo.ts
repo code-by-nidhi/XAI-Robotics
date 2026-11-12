@@ -71,7 +71,7 @@ function toAdmin(row: Row): Record<string, unknown> {
   }
 }
 
-/** As on the Zaavi CMS: a public case study tells a story about someone. */
+/** A public case study tells a story about someone. */
 function publishProblems(c: Record<string, unknown>): Record<string, string> {
   const problems: Record<string, string> = {}
   if (!text(c.title).trim()) problems.title = 'Add a title.'

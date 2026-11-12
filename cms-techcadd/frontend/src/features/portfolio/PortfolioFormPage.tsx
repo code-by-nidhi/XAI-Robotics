@@ -78,7 +78,7 @@ export default function PortfolioFormPage() {
             <CardHeader title="Project" />
             <CardBody className="space-y-5">
               <FormField label="Title" required error={errors.title?.message}>
-                <Input {...register('title')} placeholder="e.g. Claims triage assistant" />
+                <Input {...register('title')} placeholder="e.g. Self-Balancing Stepper Robot" />
               </FormField>
 
               <FormField label="URL slug" required error={errors.slug?.message}>
@@ -102,7 +102,7 @@ export default function PortfolioFormPage() {
                   <Input {...register('client')} />
                 </FormField>
                 <FormField label="Industry" error={errors.industry?.message}>
-                  <Input {...register('industry')} placeholder="e.g. Insurance" />
+                  <Input {...register('industry')} placeholder="e.g. Student build" />
                 </FormField>
               </div>
 
@@ -146,14 +146,14 @@ export default function PortfolioFormPage() {
             <CardBody className="space-y-5">
               <div className="grid gap-5 sm:grid-cols-2">
                 <FormField label="Duration" error={errors.duration?.message}>
-                  <Input {...register('duration')} placeholder="e.g. 3 months" />
+                  <Input {...register('duration')} placeholder="e.g. 8 weeks" />
                 </FormField>
                 <FormField label="Team" description="Roles or names. Press Enter after each." error={errors.team?.message}>
                   <Controller
                     control={control}
                     name="team"
                     render={({ field }) => (
-                      <TagInput value={field.value} onChange={field.onChange} maxTags={20} placeholder="e.g. ML engineer" />
+                      <TagInput value={field.value} onChange={field.onChange} maxTags={20} placeholder="e.g. Firmware lead" />
                     )}
                   />
                 </FormField>
@@ -163,7 +163,7 @@ export default function PortfolioFormPage() {
                   control={control}
                   name="technologies"
                   render={({ field }) => (
-                    <TagInput value={field.value} onChange={field.onChange} maxTags={20} placeholder="e.g. Python, Azure" />
+                    <TagInput value={field.value} onChange={field.onChange} maxTags={20} placeholder="e.g. ESP32, ROS 2, OpenCV" />
                   )}
                 />
               </FormField>

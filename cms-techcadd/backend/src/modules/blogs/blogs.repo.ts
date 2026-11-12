@@ -154,7 +154,7 @@ async function assertSlugFree(slug: string, exceptId?: string): Promise<void> {
   if (clash) throw unprocessable({ slug: 'This slug is already in use.' })
 }
 
-/** What a post needs before it can be public, as on the Zaavi CMS. */
+/** What a post needs before it can be public. */
 function publishProblems(post: { title: string; excerpt: string; body: string }): Record<string, string> {
   const problems: Record<string, string> = {}
   if (!post.title.trim()) problems.title = 'Add a title.'

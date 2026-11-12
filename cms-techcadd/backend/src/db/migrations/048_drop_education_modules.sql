@@ -1,4 +1,4 @@
--- The education modules go: this CMS now runs the Zaavi Technologies website,
+-- The education modules go: this CMS now runs a company website,
 -- which has no courses, events, gallery, testimonials, reviews, AI knowledge
 -- base or blog comments.
 --

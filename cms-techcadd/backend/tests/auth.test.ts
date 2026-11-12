@@ -150,7 +150,7 @@ describe('access', () => {
     await admin.signIn()
 
     expect((await admin.get('/blogs')).status).toBe(200)
-    expect((await admin.patch('/settings', { general: { siteName: 'Zaavi Technologies' } })).status).toBe(200)
+    expect((await admin.patch('/settings', { general: { siteName: 'XAI Robotics' } })).status).toBe(200)
     expect((await admin.get('/applications')).status).toBe(200)
     expect((await admin.get('/users')).status).toBe(200)
 

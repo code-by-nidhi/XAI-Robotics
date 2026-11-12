@@ -89,7 +89,7 @@ export interface QuickAction {
 /* Enquiries                                                            */
 /* ------------------------------------------------------------------ */
 
-/** Zaavi's inquiry pipeline. Opening a new enquiry marks it read. */
+/** The enquiry pipeline. Opening a new enquiry marks it read. */
 export type EnquiryStatus = 'new' | 'read' | 'in_progress' | 'resolved' | 'archived'
 
 /* ------------------------------------------------------------------ */

@@ -16,7 +16,7 @@ const DESCRIPTION_LIMIT = 160
 interface SeoFieldsProps {
   value: SeoValues
   onChange: (value: SeoValues) => void
-  /** Used in the search preview, e.g. "zaavi.tech/blog/ai-in-healthcare". */
+  /** Used in the search preview, e.g. "xairobotics.com/blog/building-a-self-balancing-robot". */
   previewUrl: string
   /** Falls back into the preview when no meta title is set. */
   fallbackTitle?: string

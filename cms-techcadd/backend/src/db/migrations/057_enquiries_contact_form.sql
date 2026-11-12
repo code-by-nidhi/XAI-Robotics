@@ -1,11 +1,11 @@
--- Enquiries become the Zaavi contact form's inbox.
+-- Enquiries become the website contact form's inbox.
 --
 -- The form asks for a name, an email, and optionally a phone, company and the
 -- service someone is interested in, then a message. Email is the one way back
 -- to them, so it becomes required and phone optional — the reverse of the
 -- institute's walk-in desk, where a phone number was the lead.
 --
--- Status follows Zaavi's inquiry pipeline: new → read (opened in the CMS) →
+-- Status follows the enquiry pipeline: new → read (opened in the CMS) →
 -- in_progress → resolved, with archived to clear the inbox. The old statuses
 -- map onto it by meaning rather than by name.
 

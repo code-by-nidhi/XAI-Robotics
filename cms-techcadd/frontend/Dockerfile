@@ -8,7 +8,7 @@ RUN npm ci
 COPY . .
 
 # Vite inlines import.meta.env.* into the bundle at build time.
-# Hardcoded to /api because nginx proxies /api/ to cms-api-zaavi:4000 for
+# Hardcoded to /api because nginx proxies /api/ to cms-api-xai:4000 for
 # same-origin cookies. Coolify injects VITE_API_URL as a build ARG which
 # would override this — the explicit ENV here wins over any ARG.
 ENV VITE_API_URL=/api

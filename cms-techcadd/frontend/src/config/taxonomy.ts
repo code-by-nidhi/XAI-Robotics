@@ -3,12 +3,14 @@
  *
  * Categories and services used to be records an editor managed; they are now
  * part of the website's code, so the CMS only picks from them. The same lists
- * live in three places and must be changed together:
+ * live in two places and must be changed together:
  *
  * - here,
  * - the API's backend/src/modules/shared/taxonomy.ts, which refuses any other
- *   value with a 422,
- * - the website's src/lib/site/services-data.ts, which renders them.
+ *   value with a 422.
+ *
+ * They follow the XAI Robotics website: services are its offerings (the
+ * contact form's "I'm interested in" list), categories its curriculum and builds.
  *
  * Adding an entry here alone only offers editors a choice the server rejects.
  */
@@ -24,38 +26,38 @@ export interface TaxonomyService {
 }
 
 export const BLOG_CATEGORIES: readonly TaxonomyCategory[] = [
-  { slug: 'ai-strategy', name: 'AI Strategy' },
-  { slug: 'delivery', name: 'Delivery' },
-  { slug: 'generative-ai', name: 'Generative AI' },
-  { slug: 'security', name: 'Security' },
+  { slug: 'robotics-engineering', name: 'Robotics Engineering' },
+  { slug: 'embedded-systems', name: 'Embedded Systems' },
+  { slug: 'ai-computer-vision', name: 'AI & Computer Vision' },
+  { slug: 'ros-simulation', name: 'ROS & Simulation' },
+  { slug: 'student-projects', name: 'Student Projects' },
+  { slug: 'events-workshops', name: 'Events & Workshops' },
 ]
 
 export const CASE_STUDY_CATEGORIES: readonly TaxonomyCategory[] = [
-  { slug: 'automation-agents', name: 'Automation & Agents' },
-  { slug: 'chatbots-assistants', name: 'Chatbots & Assistants' },
-  { slug: 'generative-ai', name: 'Generative AI' },
-  { slug: 'machine-learning-analytics', name: 'Machine Learning & Analytics' },
+  { slug: 'schools', name: 'Schools' },
+  { slug: 'colleges-universities', name: 'Colleges & Universities' },
+  { slug: 'franchise-partners', name: 'Franchise Partners' },
+  { slug: 'industry-partners', name: 'Industry Partners' },
 ]
 
 export const PORTFOLIO_CATEGORIES: readonly TaxonomyCategory[] = [
-  { slug: 'automation-agents', name: 'Automation & Agents' },
-  { slug: 'chatbots-assistants', name: 'Chatbots & Assistants' },
-  { slug: 'cloud-infrastructure', name: 'Cloud & Infrastructure' },
-  { slug: 'generative-ai', name: 'Generative AI' },
-  { slug: 'machine-learning-analytics', name: 'Machine Learning & Analytics' },
+  { slug: 'mobile-robots', name: 'Mobile Robots & Rovers' },
+  { slug: 'robotic-arms', name: 'Robotic Arms & Manipulators' },
+  { slug: 'legged-robots', name: 'Legged Robots' },
+  { slug: 'balancing-control', name: 'Balancing & Control Systems' },
+  { slug: 'aerial-systems', name: 'Aerial & Flight Systems' },
+  { slug: 'swarm-autonomy', name: 'Swarm & Autonomy' },
 ]
 
-/** In the order the website lists them. The slug is also the service page's URL. */
+/** XAI Robotics' offerings, in the order the contact form lists them. */
 export const SERVICES: readonly TaxonomyService[] = [
-  { slug: 'ai-consulting', title: 'AI Consulting' },
-  { slug: 'generative-ai-solutions', title: 'Generative AI' },
-  { slug: 'ai-automation', title: 'AI Automation & Agents' },
-  { slug: 'machine-learning', title: 'Machine Learning & Predictive Analytics' },
-  { slug: 'ai-chatbot-development', title: 'AI Chatbots' },
-  { slug: 'rag-solutions', title: 'RAG Knowledge Assistants' },
-  { slug: 'ai-integration', title: 'AI Integration' },
-  { slug: 'cloud-services', title: 'Cloud Infrastructure & Migration' },
-  { slug: 'telecom-solutions', title: 'Telecom & Network Optimisation' },
+  { slug: 'robotics-programme', title: '6-Month Robotics Programme' },
+  { slug: 'robotics-projects', title: 'Robotics Projects' },
+  { slug: 'rnd-lab', title: 'R&D Lab' },
+  { slug: 'workshops-events', title: 'Workshops & Events' },
+  { slug: 'franchise-b2b', title: 'Franchise & B2B' },
+  { slug: 'lab-tour', title: 'Free Lab Tour' },
 ]
 
 export type CategoryList = readonly TaxonomyCategory[]
