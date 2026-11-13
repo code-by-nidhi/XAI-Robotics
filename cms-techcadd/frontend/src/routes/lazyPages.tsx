@@ -36,6 +36,8 @@ export function Lazy({ children }: { children: ReactNode }) {
 
 export const FaqsListPage = lazy(() => import('../features/faqs/FaqsListPage'))
 export const FaqFormPage = lazy(() => import('../features/faqs/FaqFormPage'))
+export const TestimonialsListPage = lazy(() => import('../features/testimonials/TestimonialsListPage'))
+export const TestimonialFormPage = lazy(() => import('../features/testimonials/TestimonialFormPage'))
 export const TeamContributionsPage = lazy(() => import('../features/activity/TeamContributionsPage'))
 export const PersonContributionsPage = lazy(() => import('../features/activity/PersonContributionsPage'))
 export const ActivityLogPage = lazy(() => import('../features/activity/ActivityLogPage'))

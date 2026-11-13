@@ -19,6 +19,7 @@ export { mediaApi } from './resources/media'
 export { redirectsApi } from './resources/redirects'
 export { faqCategoriesApi } from './resources/faqCategories'
 export { faqsApi } from './resources/faqs'
+export { testimonialsApi } from './resources/testimonials'
 export { usersApi } from './resources/users'
 export { settingsApi } from './resources/settings'
 

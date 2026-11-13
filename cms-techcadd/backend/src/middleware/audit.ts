@@ -29,6 +29,7 @@ const TABLES: Record<string, string> = {
   portfolio: 'portfolio',
   jobs: 'jobs',
   faqs: 'faqs',
+  testimonials: 'testimonials',
   media: 'media',
   redirects: 'redirects',
 }

@@ -13,7 +13,7 @@
 export const CMS_TAG = "cms";
 
 /** Seconds a cached CMS answer is used before it is fetched again. */
-const REVALIDATE_SECONDS = 300;
+const REVALIDATE_SECONDS = 60;
 
 /** A CMS that does not answer in this long is treated as down. */
 const TIMEOUT_MS = 4000;
@@ -81,22 +81,6 @@ export const FALLBACK_SITE: SiteSettings = {
   },
 };
 
-/** The FAQ section as it shipped; seeded into the CMS by migration 062. */
-export const FALLBACK_FAQS: FaqItem[] = [
-  { question: "Who can join the programme?", answer: "Students from Class 9 onwards, college students and early professionals who want to build real robots. Phase 1 starts from the fundamentals, so curiosity matters more than experience." },
-  { question: "Do I need to know coding before I start?", answer: "No. Phase 1 teaches C/C++ and Python for embedded systems from the basics. Prior coding experience helps you move faster." },
-  { question: "Is the project kit included in the programme fee?", answer: "The kit is purchased separately in Phase 2, and the finished robot is yours to keep." },
-  { question: "How do I choose my Phase 2 project?", answer: "At the end of Phase 1, your mentor helps you pick one of the 12 projects based on your interests and skill level." },
-  { question: "Is the R&D phase compulsory?", answer: "No. Phase 3 is optional and designed for students who want to research and build their own idea. Approved projects receive components from our lab." },
-  { question: "Do you teach ROS, SolidWorks and OpenCV?", answer: "Yes. Phase 1 includes dedicated modules on embedded systems with FreeRTOS, SolidWorks CAD, OpenCV computer vision and ROS 2 with Gazebo simulation, and you apply them in your Phase 2 project." },
-  { question: "Do I need to buy SolidWorks or other software?", answer: "No. You practise in our lab during the programme. Most other tools we use, including ROS 2, OpenCV, KiCad and Python, are free and open source." },
-  { question: "Can I learn robotics online?", answer: "Phase 1 theory and programming can be followed in live online sessions. Building, testing and R&D need real hardware, so those phases take place in our robotics lab." },
-  { question: "Is the lab safe for school students?", answer: "Yes. Soldering, battery handling and power tools are always supervised by mentors, and safe-practice training is part of Module 01." },
-  { question: "Do I need my own laptop?", answer: "A laptop helps you practise coding at home and keep your project files. Ask our team about lab system availability for your batch." },
-  { question: "Can my school or college book a robotics workshop?", answer: "Yes. We run robotics workshops, bootcamps and live demonstrations for schools, colleges and universities, and can set up a complete robotics lab through our franchise and B2B programme." },
-  { question: "Will I receive a certificate?", answer: "Yes. Students who complete the programme receive an XAI Robotics certificate, along with a portfolio of their project work." },
-];
-
 /* ------------------------------------------------------------------ */
 /* Reads                                                                */
 /* ------------------------------------------------------------------ */
@@ -134,16 +118,168 @@ export async function getSite(): Promise<SiteSettings> {
   };
 }
 
-/**
- * Every published FAQ, in the CMS's order.
- *
- * An empty list from a CMS that answered falls back too: a homepage section
- * with a heading and nothing under it is worse than the shipped questions.
- */
+/** Every published FAQ, in the CMS's order (empty when the CMS is unavailable). */
 export async function getFaqs(): Promise<FaqItem[]> {
   const data = await read<{ items?: { question?: unknown; answer?: unknown }[] }>("/faqs");
   const items = (data?.items ?? [])
     .filter((f): f is FaqItem => typeof f.question === "string" && typeof f.answer === "string")
     .map(({ question, answer }) => ({ question, answer }));
-  return items.length > 0 ? items : FALLBACK_FAQS;
+  return items;
 }
+
+
+/* ------------------------------------------------------------------ */
+/* Content collections: blogs, case studies, portfolio, testimonials   */
+/* ------------------------------------------------------------------ */
+
+export interface Media {
+  url: string;
+  alt: string;
+}
+export interface Category {
+  name: string;
+  slug: string;
+}
+export interface Result {
+  value: string;
+  label: string;
+}
+export interface Seo {
+  title: string | null;
+  description: string | null;
+  noIndex: boolean;
+}
+
+export interface PostCard {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: Category | null;
+  tags: string[];
+  readMinutes: number;
+  cover: Media | null;
+  author: { name: string; title: string | null } | null;
+  publishedAt: string;
+}
+export interface Post extends PostCard {
+  html: string;
+  seo: Seo;
+}
+
+export interface CaseStudyCard {
+  slug: string;
+  title: string;
+  client: string;
+  industry: string;
+  excerpt: string;
+  cover: Media | null;
+  duration: string | null;
+  results: Result[];
+  technologies: string[];
+  category: Category | null;
+  publishedAt: string;
+}
+export interface CaseStudy extends CaseStudyCard {
+  overviewHtml: string;
+  challengeHtml: string;
+  approachHtml: string;
+  solutionHtml: string;
+  implementationHtml: string;
+  testimonial: { text: string; name: string | null; role: string | null } | null;
+  seo: Seo;
+}
+
+export interface PortfolioCard {
+  slug: string;
+  title: string;
+  client: string | null;
+  industry: string | null;
+  category: Category | null;
+  summary: string;
+  cover: Media | null;
+  featured: boolean;
+  technologies: string[];
+  /** Slug of the linked public case study, if any. */
+  caseStudy: string | null;
+  publishedAt: string;
+}
+export interface PortfolioItem extends PortfolioCard {
+  descriptionHtml: string;
+  results: Result[];
+  team: string[];
+  duration: string | null;
+  projectUrl: string | null;
+  githubUrl: string | null;
+  seo: Seo;
+}
+
+export interface Testimonial {
+  id: string;
+  name: string;
+  role: string | null;
+  company: string | null;
+  quote: string;
+  rating: number | null;
+  avatar: Media | null;
+}
+
+/** A detail read: the item, a redirect to its current slug, or null (missing / CMS down). */
+export type Detail<T> = { item: T } | { redirect: string } | null;
+
+/** CMS upload URLs can be root-relative to the API's origin. */
+function absoluteMedia<T extends Media | null>(media: T): T {
+  if (!media || !media.url.startsWith("/")) return media;
+  const base = serverBase();
+  return (base ? { ...media, url: new URL(media.url, base).toString() } : media) as T;
+}
+
+/** Fix up the media fields every collection shares. */
+function withMedia<T extends { cover?: Media | null; avatar?: Media | null }>(item: T): T {
+  return {
+    ...item,
+    ...("cover" in item ? { cover: absoluteMedia(item.cover ?? null) } : {}),
+    ...("avatar" in item ? { avatar: absoluteMedia(item.avatar ?? null) } : {}),
+  };
+}
+
+async function list<T extends object>(path: string): Promise<T[]> {
+  const data = await read<{ items?: T[] }>(path);
+  return Array.isArray(data?.items) ? data.items.map((i) => withMedia(i)) : [];
+}
+
+/** One item by slug; the CMS answers an old slug with 301 + `{ redirect }`. */
+async function detail<T extends object>(path: string): Promise<Detail<T>> {
+  const base = serverBase();
+  if (!base) return null;
+  try {
+    const response = await fetch(`${base}/public${path}`, {
+      redirect: "manual",
+      next: { revalidate: REVALIDATE_SECONDS, tags: [CMS_TAG] },
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if (response.status === 301) {
+      const body = (await response.json()) as { redirect?: unknown };
+      return typeof body.redirect === "string" ? { redirect: body.redirect } : null;
+    }
+    if (!response.ok) return null;
+    return { item: withMedia((await response.json()) as T) };
+  } catch (error) {
+    console.warn(`[cms] ${path} unavailable (${error instanceof Error ? error.message : String(error)}).`);
+    return null;
+  }
+}
+
+const slugPath = (slug: string) => encodeURIComponent(slug);
+
+export const getPosts = (pageSize = 24) => list<PostCard>(`/blogs?pageSize=${pageSize}`);
+export const getPost = (slug: string) => detail<Post>(`/blogs/${slugPath(slug)}`);
+
+export const getCaseStudies = (pageSize = 24) => list<CaseStudyCard>(`/case-studies?pageSize=${pageSize}`);
+export const getCaseStudy = (slug: string) => detail<CaseStudy>(`/case-studies/${slugPath(slug)}`);
+
+export const getPortfolio = (opts: { featured?: boolean; pageSize?: number } = {}) =>
+  list<PortfolioCard>(`/portfolio?pageSize=${opts.pageSize ?? 24}${opts.featured ? "&featured=1" : ""}`);
+export const getPortfolioItem = (slug: string) => detail<PortfolioItem>(`/portfolio/${slugPath(slug)}`);
+
+export const getTestimonials = (opts: { featured?: boolean } = {}) =>
+  list<Testimonial>(`/testimonials${opts.featured ? "?featured=1" : ""}`);

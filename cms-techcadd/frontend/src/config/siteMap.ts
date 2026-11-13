@@ -89,6 +89,10 @@ export const SITE_MAP: Record<string, Placement> = {
     where:
       'The "Frequently asked questions" section on the homepage. Every published question shows, in category order, then the order set here.',
   },
+  testimonials: {
+    where:
+      'The testimonials on the website, read from /api/public/testimonials. Only published ones show, in the display order set here; featured ones are the homepage’s short list.',
+  },
   settings: {
     where:
       'The homepage contact section (contact email, the two location lines from Address and City, the reply time) and the footer social links. The default title and description are the site’s search metadata.',

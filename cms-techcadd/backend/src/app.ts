@@ -26,6 +26,7 @@ import { publicRouter } from './modules/public/public.routes.js'
 import { redirectsRouter } from './modules/seo/seo.routes.js'
 import { settingsRouter } from './modules/settings/settings.routes.js'
 import { tagsRouter } from './modules/tags/tags.routes.js'
+import { testimonialsRouter } from './modules/testimonials/testimonials.routes.js'
 import { usersRouter } from './modules/users/users.routes.js'
 
 export function createApp() {
@@ -126,6 +127,7 @@ export function createApp() {
   app.use('/api/search', searchRouter)
   app.use('/api/settings', settingsRouter)
   app.use('/api/tags', tagsRouter)
+  app.use('/api/testimonials', testimonialsRouter)
   app.use('/api/users', usersRouter)
 
   app.use((_req, res) => {

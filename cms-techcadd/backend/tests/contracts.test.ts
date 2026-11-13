@@ -264,6 +264,7 @@ const SIDEBAR_APIS = [
   '/tags',
   '/faqs',
   '/faq-categories',
+  '/testimonials',
   '/enquiries',
   '/media',
   '/redirects',
@@ -287,7 +288,7 @@ describe('every module the sidebar reaches', () => {
   })
 
   it('no longer mounts the education modules', async () => {
-    for (const path of ['/courses', '/events', '/gallery', '/testimonials', '/reviews', '/ai-knowledge', '/comments']) {
+    for (const path of ['/courses', '/events', '/gallery', '/reviews', '/ai-knowledge', '/comments']) {
       expect((await api.get(path)).status, path).toBe(404)
     }
   })

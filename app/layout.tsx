@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Michroma, Inter, JetBrains_Mono } from "next/font/google";
 import { getSite } from "@/lib/cms";
+import Shell from "@/components/Shell";
 import "./globals.css";
 
 const display = Michroma({ weight: "400", subsets: ["latin"], variable: "--font-display" });
@@ -11,20 +12,23 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getSite();
   return {
-    title: seo.defaultTitle,
+    title: { default: seo.defaultTitle, template: `%s — ${seo.defaultTitle.split(" — ")[0]}` },
     description: seo.defaultDescription,
     robots: seo.allowIndexing ? undefined : { index: false, follow: false },
   };
 }
 
 export const viewport: Viewport = {
-  themeColor: "#050506",
+  themeColor: "#050505",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const site = await getSite();
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Shell site={site}>{children}</Shell>
+      </body>
     </html>
   );
 }

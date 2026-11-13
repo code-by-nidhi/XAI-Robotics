@@ -162,7 +162,7 @@ export default function Contact({ site }: { site: SiteSettings }) {
     <section className="section contact" id="contact" ref={root}>
       <div className="ct-glow" aria-hidden="true" />
       <div className="container">
-        <span className="section-tag">[16] Contact</span>
+        <span className="section-tag">Contact</span>
         <h2 className="ct-title">
           {LINES.map((l, i) => (
             <span key={l} className="ct-line">

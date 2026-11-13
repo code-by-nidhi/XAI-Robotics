@@ -1,102 +1,50 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
-import Lenis from "lenis";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
-import Cursor from "./Cursor";
-import Nav from "./Nav";
-import Hero from "./Hero";
-import Manifesto from "./Manifesto";
-import Marquee from "./Marquee";
-import Anatomy from "./Anatomy";
-import Fleet from "./Fleet";
-import Core from "./Core";
-import Process from "./Process";
-import WhyNow from "./WhyNow";
-import Programme from "./Programme";
-import Toolchain from "./Toolchain";
-import Projects from "./Projects";
-import Hardware from "./Hardware";
-import RnDLab from "./RnDLab";
-import Audience from "./Audience";
-import Events from "./Events";
-import Partner from "./Partner";
-import Faq from "./Faq";
+import HomeHero from "./home/HomeHero";
+import HomeFeatures from "./home/HomeFeatures";
+import HomeAbout from "./home/HomeAbout";
+import TechMarquee from "./home/TechMarquee";
+import HomeCaseStudy from "./home/HomeCaseStudy";
+import HomeCta from "./home/HomeCta";
+import HomePortfolio from "./home/HomePortfolio";
+import HomeNews from "./home/HomeNews";
+import HomeTestimonials from "./home/HomeTestimonials";
+import HomeClosing from "./home/HomeClosing";
 import Contact from "./Contact";
-import Footer from "./Footer";
-import { cmsBrowserUrl, type FaqItem, type SiteSettings } from "@/lib/cms";
+import { FaqBlock } from "./ui/Blocks";
+import { useGo } from "./Shell";
+import type { FaqItem, PortfolioCard, PostCard, SiteSettings, Testimonial } from "@/lib/cms";
 
-export default function Site({ site, faqs }: { site: SiteSettings; faqs: FaqItem[] }) {
-  const lenisRef = useRef<Lenis | null>(null);
-
-  // One page view per visit to the homepage, counted by the CMS (Analytics).
-  // Fire-and-forget: the CMS always answers 204, and a failure here must never
-  // reach the visitor.
-  useEffect(() => {
-    const url = cmsBrowserUrl("/public/track");
-    if (!url) return;
-    fetch(url, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ path: window.location.pathname }),
-      keepalive: true,
-    }).catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-    window.scrollTo(0, 0);
-
-    const lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.9 });
-    lenisRef.current = lenis;
-    lenis.on("scroll", ScrollTrigger.update);
-    const tick = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      gsap.ticker.remove(tick);
-      lenis.destroy();
-      lenisRef.current = null;
-    };
-  }, []);
-
-  const navigate = useCallback((target: string) => {
-    lenisRef.current?.scrollTo(target, { duration: 1.6 });
-  }, []);
-
-  const lockScroll = useCallback((locked: boolean) => {
-    if (locked) lenisRef.current?.stop();
-    else lenisRef.current?.start();
-  }, []);
+/** The homepage. Blog posts, the featured build, testimonials and FAQs come from the CMS. */
+export default function Site({
+  site,
+  posts,
+  featured,
+  testimonials,
+  faqs,
+}: {
+  site: SiteSettings;
+  posts: PostCard[];
+  featured: PortfolioCard | null;
+  testimonials: Testimonial[];
+  faqs: FaqItem[];
+}) {
+  const navigate = useGo();
 
   return (
-    <>
-      <Cursor />
-      <div className="lab-bg" aria-hidden="true" />
-      <div className="noise" aria-hidden="true" />
-      <Nav onNavigate={navigate} />
-      <main>
-        <Hero onNavigate={navigate} />
-        <Manifesto />
-        <Marquee />
-        <Anatomy />
-        <Fleet />
-        <Core />
-        <Process />
-        <WhyNow />
-        <Programme />
-        <Toolchain />
-        <Projects onNavigate={navigate} onLock={lockScroll} />
-        <Hardware />
-        <RnDLab />
-        <Audience />
-        <Events onNavigate={navigate} />
-        <Partner onNavigate={navigate} />
-        <Faq items={faqs} />
-        <Contact site={site} />
-      </main>
-      <Footer onNavigate={navigate} social={site.social} />
-    </>
+    <main>
+      <HomeHero onNavigate={navigate} />
+      <HomeAbout onNavigate={navigate} />
+      <TechMarquee />
+      <HomeFeatures onNavigate={navigate} />
+      <HomeCaseStudy onNavigate={navigate} />
+      <HomePortfolio item={featured} onNavigate={navigate} />
+      <HomeCta onNavigate={navigate} />
+      <HomeTestimonials items={testimonials} />
+      <HomeNews posts={posts} onNavigate={navigate} />
+      <FaqBlock items={faqs} lede="Answers to what students, parents and partners ask us most." />
+      <HomeClosing social={site.social} />
+      <Contact site={site} />
+    </main>
   );
 }

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import Logo from "./Logo";
 import { NAV_LINKS } from "./Nav";
+import { useGoClick } from "./Shell";
 import type { SiteSettings } from "@/lib/cms";
 
 /** Settings → Social, in the order the footer lists them. */
@@ -15,13 +16,8 @@ const SOCIAL: { key: keyof SiteSettings["social"]; label: string }[] = [
   { key: "facebook", label: "Facebook" },
 ];
 
-export default function Footer({
-  onNavigate,
-  social,
-}: {
-  onNavigate: (t: string) => void;
-  social: SiteSettings["social"];
-}) {
+export default function Footer({ social }: { social: SiteSettings["social"] }) {
+  const goClick = useGoClick();
   // Only profiles set in the CMS; an empty or "#" link would go nowhere.
   const profiles = SOCIAL.filter(({ key }) => social[key] && social[key] !== "#");
 
@@ -48,14 +44,7 @@ export default function Footer({
           <Logo />
           <nav className="ft-links" aria-label="Footer">
             {NAV_LINKS.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate(l.href);
-                }}
-              >
+              <a key={l.href} href={l.href} onClick={goClick(l.href)}>
                 {l.label}
               </a>
             ))}
@@ -66,7 +55,9 @@ export default function Footer({
                 {label}
               </a>
             ))}
-            <a href="#">Careers</a>
+            <a href="/contact" onClick={goClick("/contact")}>
+              Contact
+            </a>
           </div>
         </div>
         <p className="ft-big" aria-hidden="true">
@@ -79,13 +70,7 @@ export default function Footer({
           <span>
             <span className="pulse" /> All systems operational
           </span>
-          <a
-            href="#top"
-            onClick={(e) => {
-              e.preventDefault();
-              onNavigate("#top");
-            }}
-          >
+          <a href="#top" onClick={goClick("#top")}>
             Back to top ↑
           </a>
         </div>

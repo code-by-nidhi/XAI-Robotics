@@ -9,6 +9,7 @@ import {
   Images,
   LayoutDashboard,
   Mail,
+  MessageSquareQuote,
   Newspaper,
   Search,
   Settings,
@@ -37,6 +38,7 @@ export const navSections: NavSection[] = [
       { id: 'case-studies', label: 'Case Studies', path: '/case-studies', icon: Trophy },
       { id: 'portfolio', label: 'Portfolio', path: '/portfolio', icon: LayoutGrid },
       { id: 'faqs', label: 'FAQ', path: '/faqs', icon: CircleHelp },
+      { id: 'testimonials', label: 'Testimonials', path: '/testimonials', icon: MessageSquareQuote },
     ],
   },
   {

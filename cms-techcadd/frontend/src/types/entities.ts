@@ -376,3 +376,25 @@ export interface Faq extends BaseEntity {
   featured: boolean
   status: ReviewStatus
 }
+
+/* ------------------------------------------------------------------ */
+/* Testimonials                                                         */
+/* ------------------------------------------------------------------ */
+
+/** Who a testimonial is published as — no review workflow, see 063_testimonials.sql. */
+export type TestimonialStatus = 'published' | 'draft'
+
+export interface Testimonial extends BaseEntity {
+  name: string
+  /** e.g. "Programme graduate, Batch 2025", "Parent", "Franchise partner". */
+  role?: string
+  company?: string
+  quote: string
+  /** 1–5, or null for a quote shown without stars. */
+  rating: number | null
+  avatar: MediaRef | null
+  /** The homepage shows the featured ones. */
+  featured: boolean
+  order: number
+  status: TestimonialStatus
+}

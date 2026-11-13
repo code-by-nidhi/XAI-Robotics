@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480" fill="none" stroke="#3fd8ff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
   <g stroke-opacity=".55">
     <path d="M0 72h96l24 24h88l16-16h56"/>
     <path d="M0 120h48l24 24v64l24 24h72"/>
@@ -14,7 +14,7 @@
     <path d="M24 0v24l-24 24"/>
     <path d="M440 480v-32l40-40"/>
   </g>
-  <g stroke-opacity=".75" fill="#05080f">
+  <g stroke-opacity=".75" fill="#080808">
     <circle cx="280" cy="80" r="4"/>
     <circle cx="168" cy="232" r="4"/>
     <circle cx="192" cy="96" r="4"/>
@@ -33,7 +33,7 @@
     <rect x="392" y="440" width="28" height="16" rx="2"/>
     <rect x="40" y="200" width="16" height="28" rx="2"/>
   </g>
-  <g fill="#3fd8ff" stroke="none" fill-opacity=".7">
+  <g fill="#ffffff" stroke="none" fill-opacity=".7">
     <circle cx="236" cy="196" r="2"/>
     <circle cx="96" cy="72" r="2"/>
     <circle cx="96" cy="232" r="2"/>

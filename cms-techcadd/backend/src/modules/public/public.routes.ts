@@ -19,6 +19,7 @@ import * as faqsRepo from '../faqs/faqs.repo.js'
 import * as jobsRepo from '../jobs/jobs.repo.js'
 import * as portfolioRepo from '../portfolio/portfolio.repo.js'
 import * as settingsRepo from '../settings/settings.repo.js'
+import * as testimonialsRepo from '../testimonials/testimonials.repo.js'
 import { liveSql, releaseDueContent } from '../shared/publishing.js'
 
 /**
@@ -197,6 +198,24 @@ publicRouter.get(
   '/faq-categories',
   asyncHandler(async (_req, res) => {
     const items = await faqCategoriesRepo.publicTree()
+    res.json({ items, total: items.length })
+  }),
+)
+
+/* ------------------------------------------------------------------ */
+/* Testimonials                                                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Published testimonials, by the order set in the CMS (newest first among
+ * equals). `?featured=1` for the homepage's short list.
+ *
+ * Each item: { id, name, role, company, quote, rating, avatar: { url, alt } | null }.
+ */
+publicRouter.get(
+  '/testimonials',
+  asyncHandler(async (req, res) => {
+    const items = await testimonialsRepo.publicList({ featured: flag(req.query.featured) })
     res.json({ items, total: items.length })
   }),
 )

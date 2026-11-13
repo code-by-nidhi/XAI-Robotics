@@ -33,6 +33,8 @@ import {
   SettingsPage,
   FaqsListPage,
   FaqFormPage,
+  TestimonialsListPage,
+  TestimonialFormPage,
 } from './lazyPages'
 
 /**
@@ -54,6 +56,7 @@ const BUILT_PATHS = new Set([
   '/jobs',
   '/applications',
   '/faqs',
+  '/testimonials',
   '/team',
   '/team-contributions',
   '/activity-log',
@@ -121,6 +124,7 @@ export const router = createBrowserRouter([
       ...crudRoutes('case-studies', <CaseStudiesListPage />, <CaseStudyFormPage />),
       ...crudRoutes('portfolio', <PortfolioListPage />, <PortfolioFormPage />),
       ...crudRoutes('faqs', <FaqsListPage />, <FaqFormPage />),
+      ...crudRoutes('testimonials', <TestimonialsListPage />, <TestimonialFormPage />),
       ...crudRoutes('jobs', <JobsListPage />, <JobFormPage />),
 
       // Applications arrive from the careers form: an inbox with a detail

@@ -23,7 +23,7 @@ export default function Cursor() {
       ry(e.clientY);
     };
     const over = (e: MouseEvent) => {
-      const hit = (e.target as HTMLElement).closest("a, button, input, textarea, [data-hover]");
+      const hit = (e.target as HTMLElement).closest("a, button, input, textarea, select, label, [data-hover]");
       ring.current?.classList.toggle("is-hover", !!hit);
     };
 

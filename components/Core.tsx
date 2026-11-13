@@ -79,9 +79,9 @@ function NeuralSphere() {
 
       // Core glow
       const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, R * 0.9);
-      g.addColorStop(0, "rgba(34,225,255,0.24)");
-      g.addColorStop(0.4, "rgba(47,123,255,0.07)");
-      g.addColorStop(1, "rgba(47,123,255,0)");
+      g.addColorStop(0, "rgba(255, 255, 255, 0.24)");
+      g.addColorStop(0.4, "rgba(160, 160, 160, 0.07)");
+      g.addColorStop(1, "rgba(160, 160, 160, 0)");
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, w, h);
 
@@ -108,7 +108,7 @@ function NeuralSphere() {
           Math.sin(th) * 1.25 * Math.cos(tilt),
           R
         );
-        ctx.fillStyle = "#22e1ff";
+        ctx.fillStyle = "#ffffff";
         ctx.beginPath();
         ctx.arc(S.X, S.Y, 2.6 * S.p, 0, Math.PI * 2);
         ctx.fill();
