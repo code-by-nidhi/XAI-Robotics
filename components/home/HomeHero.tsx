@@ -1,45 +1,31 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { gsap, useGSAP } from "@/lib/gsap";
-import { useScrollLock, useServiceForm } from "../Shell";
+import { useRef } from "react";
+import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { useServiceForm } from "../Shell";
 import ChiChi from "../ChiChi";
 import CrossBands from "./CrossBands";
 
-const VIDEO_SRC = "https://cdn.droptocdn.com/files/98ca7f60-1ff5-4b78-a006-fbe50ec3b0f6/robot_assembly_black_gray.mp4";
+/*
+ * Re-encoded for scrubbing: a keyframe every 4 frames and no B-frames, so any
+ * point in the video can be shown almost instantly (the original had a single
+ * keyframe, which made every seek decode from the start).
+ */
+const VIDEO_SRC = "/videos/robot-assembly.mp4";
+const VIDEO_POSTER = "/videos/robot-assembly-poster.jpg";
 
-/** Once per browser session the intro plays through with the page held on it. */
-const SEEN_KEY = "xai-intro-video-seen";
-/** If playback makes no progress for this long (slow network, stall), let the visitor go. */
-const STALL_MS = 8000;
-
-const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " ", "Spacebar"]);
-
-function alreadySeen(): boolean {
-  try {
-    return sessionStorage.getItem(SEEN_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-function markSeen() {
-  try {
-    sessionStorage.setItem(SEEN_KEY, "1");
-  } catch {
-    /* storage unavailable: the intro may simply play again next visit */
-  }
-}
+/** How far the visitor scrolls (as a share of the screen height) to play the 36 s video start to end. */
+const SCRUB_DISTANCE = "+=450%";
+/** How quickly the shown frame catches up with the scroll position each animation frame (0–1). */
+const EASE = 0.14;
 
 export default function HomeHero({ onNavigate }: { onNavigate: (t: string) => void }) {
   const root = useRef<HTMLElement>(null);
   const visionRef = useRef<HTMLElement>(null);
-  const [theatre, setTheatre] = useState(false);
-  const mediaRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const scrollLock = useScrollLock();
+  const progressRef = useRef<HTMLElement>(null);
   const openServiceForm = useServiceForm();
-  const [holding, setHolding] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   // Intro text animation.
   useGSAP(
@@ -60,9 +46,74 @@ export default function HomeHero({ onNavigate }: { onNavigate: (t: string) => vo
     { scope: root },
   );
 
-  // "Vision online" section: heading block, then the video card rising in.
+  /*
+   * "Vision online": the video is driven by scrolling. When the frame reaches
+   * the middle of the screen it pins there, and scrolling down plays it
+   * forward (scrolling up plays it back). Once it reaches the end, the page
+   * carries on.
+   */
   useGSAP(
     () => {
+      const video = videoRef.current;
+      const stage = stageRef.current;
+      if (!video || !stage) return;
+
+      video.pause();
+      let target = 0; // 0–1, from the scroll position
+      let shown = 0; // 0–1, eased towards target
+      let raf = 0;
+      let blobUrl = "";
+
+      // Ease the frame towards the scroll position and seek once the previous seek has landed.
+      const tick = () => {
+        raf = 0;
+        const d = video.duration;
+        if (!d) return;
+        shown += (target - shown) * EASE;
+        if (Math.abs(target - shown) < 0.0005) shown = target;
+        const t = shown * Math.max(0, d - 0.05);
+        if (!video.seeking && Math.abs(video.currentTime - t) > 1 / 60) video.currentTime = t;
+        if (shown !== target || video.seeking) raf = requestAnimationFrame(tick);
+      };
+      const sync = (p: number) => {
+        target = p;
+        if (progressRef.current) progressRef.current.style.transform = `scaleX(${p})`;
+        if (!raf) raf = requestAnimationFrame(tick);
+      };
+
+      const st = ScrollTrigger.create({
+        trigger: stage,
+        start: "center center",
+        end: SCRUB_DISTANCE,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => sync(self.progress),
+        onRefresh: (self) => sync(self.progress),
+      });
+
+      // iOS only paints seeked frames after the video has been played once.
+      const onMeta = () => {
+        video
+          .play()
+          .then(() => video.pause())
+          .catch(() => {})
+          .finally(() => sync(st.progress));
+      };
+      video.addEventListener("loadedmetadata", onMeta);
+
+      // Load the whole file up front so seeks never wait on the network;
+      // fall back to normal streaming if that fails.
+      const ctrl = new AbortController();
+      fetch(VIDEO_SRC, { signal: ctrl.signal })
+        .then((r) => (r.ok ? r.blob() : Promise.reject()))
+        .then((blob) => {
+          blobUrl = URL.createObjectURL(blob);
+          video.src = blobUrl;
+        })
+        .catch(() => {
+          if (!ctrl.signal.aborted) video.src = VIDEO_SRC;
+        });
+
       gsap.from(".hv-fade", {
         opacity: 0,
         y: 30,
@@ -77,115 +128,18 @@ export default function HomeHero({ onNavigate }: { onNavigate: (t: string) => vo
         scale: 0.97,
         duration: 1.6,
         ease: "expo.out",
-        scrollTrigger: { trigger: ".hv-frame", start: "top 92%" },
+        scrollTrigger: { trigger: stage, start: "top 92%" },
       });
+
+      return () => {
+        ctrl.abort();
+        if (raf) cancelAnimationFrame(raf);
+        video.removeEventListener("loadedmetadata", onMeta);
+        if (blobUrl) URL.revokeObjectURL(blobUrl);
+      };
     },
     { scope: visionRef },
   );
-
-  /*
-   * Hold the page on the video until it has played through once.
-   *
-   * The lock is released when the video ends — or, so nobody is ever stuck,
-   * when it can't autoplay, fails to load, stalls, the visitor presses
-   * "Skip", clicks any navigation link, or prefers reduced motion.
-   */
-  useEffect(() => {
-    const video = videoRef.current;
-    const media = mediaRef.current;
-    if (!video || !media) return;
-
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || alreadySeen()) {
-      video.loop = true;
-      video.play().catch(() => {});
-      return;
-    }
-
-    let released = false;
-    let centred = false;
-    let lastTime = -1;
-    let lastProgressAt = performance.now();
-
-    const release = () => {
-      if (released) return;
-      released = true;
-      markSeen();
-      setHolding(false);
-      scrollLock.unlock("intro");
-      // From now on it just loops quietly in the background.
-      video.loop = true;
-      if (video.paused) video.play().catch(() => {});
-    };
-
-    scrollLock.lock("intro");
-    setHolding(true);
-    // Released from outside (e.g. a nav link): stop holding too.
-    const unsubscribe = scrollLock.subscribe(() => {
-      if (!scrollLock.isLocked("intro")) release();
-    });
-
-    // Any attempt to scroll brings the whole video into view, then stays there.
-    // Scrolling inside a dialog (e.g. the service form) is not an attempt to leave the intro.
-    const inDialog = (e: Event) => (e.target as Element | null)?.closest?.("[role=dialog]") != null;
-    const centre = () => {
-      if (released || centred || scrollLock.isLocked("modal")) return;
-      centred = true;
-      const rect = media.getBoundingClientRect();
-      const offset = -Math.max(0, (window.innerHeight - rect.height) / 2);
-      scrollLock.scrollTo(media, { offset, duration: 1.1 });
-    };
-    const onWheel = (e: WheelEvent) => {
-      if (!inDialog(e)) centre();
-    };
-    const onTouch = (e: TouchEvent) => {
-      if (released || inDialog(e)) return;
-      e.preventDefault();
-      centre();
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (released || !SCROLL_KEYS.has(e.key) || inDialog(e)) return;
-      const target = e.target as HTMLElement | null;
-      if (target && /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(target.tagName)) return;
-      e.preventDefault();
-      centre();
-    };
-    window.addEventListener("wheel", onWheel, { passive: true });
-    window.addEventListener("touchmove", onTouch, { passive: false });
-    window.addEventListener("keydown", onKey);
-
-    const onTime = () => {
-      if (video.duration) setProgress(video.currentTime / video.duration);
-      if (video.currentTime !== lastTime) {
-        lastTime = video.currentTime;
-        lastProgressAt = performance.now();
-      }
-    };
-    video.addEventListener("timeupdate", onTime);
-    video.addEventListener("ended", release);
-    video.addEventListener("error", release);
-
-    // Autoplay blocked (e.g. data saver): don't hold the page on a still frame.
-    video.play().catch(release);
-
-    // Stall watchdog.
-    const watchdog = window.setInterval(() => {
-      if (!released && performance.now() - lastProgressAt > STALL_MS) release();
-    }, 1000);
-
-    return () => {
-      window.clearInterval(watchdog);
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchmove", onTouch);
-      window.removeEventListener("keydown", onKey);
-      video.removeEventListener("timeupdate", onTime);
-      video.removeEventListener("ended", release);
-      video.removeEventListener("error", release);
-      unsubscribe();
-      // Leaving the page mid-intro must never leave scrolling locked.
-      if (!released) scrollLock.unlock("intro");
-    };
-  }, [scrollLock]);
 
   const go = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
@@ -266,91 +220,29 @@ export default function HomeHero({ onNavigate }: { onNavigate: (t: string) => vo
             </div>
           </div>
 
-          <div className={`hh-media hv-frame${holding ? " is-holding" : ""}`} ref={mediaRef}>
-            <video
-              ref={videoRef}
-              className="hh-video"
-              src={VIDEO_SRC}
-              muted
-              playsInline
-              autoPlay
-              preload="auto"
-              aria-label="A robot being assembled, shown in black and grey"
-            />
-            <span className="hv-fadeout" aria-hidden="true" />
-            <span className="hh-chip hh-chip-tl mono">XAI · Lab 01</span>
-            <button
-              type="button"
-              className="hv-play"
-              onClick={() => setTheatre(true)}
-              aria-label="Play the video with sound"
-            >
-              <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
-                <path d="M8 5.5v13l11-6.5z" fill="currentColor" />
-              </svg>
-            </button>
-            {holding && (
-              <button
-                type="button"
-                className="hh-chip hh-chip-br hh-skip mono"
-                onClick={() => scrollLock.unlock("intro")}
-              >
-                Skip intro ›
-              </button>
-            )}
-            {holding && (
-              <span className="hh-progress" aria-hidden="true">
-                <i style={{ transform: `scaleX(${progress})` }} />
+          <div className="hv-stage" ref={stageRef}>
+            <div className="hh-media hv-frame">
+              <video
+                ref={videoRef}
+                className="hh-video"
+                poster={VIDEO_POSTER}
+                muted
+                playsInline
+                preload="auto"
+                aria-label="A robot being assembled, shown in black and grey. Scroll to play."
+              />
+              <span className="hv-fadeout" aria-hidden="true" />
+              <span className="hh-chip hh-chip-tl mono">XAI · Lab 01</span>
+              <span className="hh-chip hh-chip-br mono" aria-hidden="true">
+                Scroll to play ↓
               </span>
-            )}
+              <span className="hh-progress" aria-hidden="true">
+                <i ref={progressRef} />
+              </span>
+            </div>
           </div>
         </div>
       </section>
-
-      {theatre && <VideoTheatre src={VIDEO_SRC} onClose={() => setTheatre(false)} />}
     </>
-  );
-}
-
-/** Full-screen player with sound and controls (the template's lightbox). */
-function VideoTheatre({ src, onClose }: { src: string; onClose: () => void }) {
-  const scrollLock = useScrollLock();
-  const closeRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    scrollLock.lock("theatre");
-    const previous = document.activeElement as HTMLElement | null;
-    closeRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      scrollLock.unlock("theatre");
-      previous?.focus?.();
-    };
-  }, [onClose, scrollLock]);
-
-  return (
-    <div
-      className="hv-theatre"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Video player"
-      data-lenis-prevent
-      onMouseDown={(e) => e.target === e.currentTarget && onClose()}
-    >
-      <button
-        type="button"
-        className="sm-close hv-theatre-close"
-        aria-label="Close video"
-        onClick={onClose}
-        ref={closeRef}
-      >
-        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-          <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        </svg>
-      </button>
-      <video className="hv-theatre-video" src={src} controls autoPlay playsInline />
-    </div>
   );
 }

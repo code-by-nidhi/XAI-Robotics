@@ -3,22 +3,22 @@
 import { useRef } from "react";
 import { useReveal } from "@/lib/reveal";
 import { useServiceForm } from "../Shell";
-import { useDraw } from "./useDraw";
-import { Humanoid, Manipulator, Quadruped } from "../RobotArt";
+import { usePhotoReveal } from "./usePhotoReveal";
+import RobotPhoto from "./RobotPhoto";
 
 const FEATURES = [
   {
-    art: <Humanoid />,
+    art: <RobotPhoto name="humanoid" />,
     t: "Robotics Programme",
     d: "Six months of lab sessions on microcontrollers, sensors, control, ROS 2 and computer vision — all on real hardware.",
   },
   {
-    art: <Manipulator />,
+    art: <RobotPhoto name="arm" />,
     t: "R&D Incubation",
     d: "Bring your own idea. We issue components from our lab and mentor you from prototype to presentable research.",
   },
   {
-    art: <Quadruped />,
+    art: <RobotPhoto name="drone" />,
     t: "Workshops & Labs",
     d: "Bootcamps, live robot shows and complete lab setups for schools, colleges and franchise partners.",
   },
@@ -28,7 +28,7 @@ export default function HomeFeatures({ onNavigate }: { onNavigate: (t: string) =
   const root = useRef<HTMLElement>(null);
   const openServiceForm = useServiceForm();
   useReveal(root);
-  useDraw(root);
+  usePhotoReveal(root);
 
   return (
     <section className="section hm" id="services" ref={root}>

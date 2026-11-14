@@ -2,8 +2,8 @@
 
 import { useRef } from "react";
 import { useReveal } from "@/lib/reveal";
-import { useDraw } from "./useDraw";
-import { Quadruped } from "../RobotArt";
+import { usePhotoReveal } from "./usePhotoReveal";
+import RobotPhoto from "./RobotPhoto";
 import type { PortfolioCard } from "@/lib/cms";
 import { Empty } from "../ui/Cards";
 
@@ -17,7 +17,7 @@ export default function HomePortfolio({
 }) {
   const root = useRef<HTMLElement>(null);
   useReveal(root);
-  useDraw(root);
+  usePhotoReveal(root);
 
   const go = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
@@ -60,7 +60,7 @@ export default function HomePortfolio({
               // eslint-disable-next-line @next/next/no-img-element
               <img src={item.cover.url} alt={item.cover.alt} className="hm-model-img" />
             ) : (
-              <Quadruped />
+              <RobotPhoto name="arm" />
             )}
           </div>
           <div className="hm-model-body">

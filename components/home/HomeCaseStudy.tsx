@@ -3,8 +3,8 @@
 import { useRef } from "react";
 import { useReveal } from "@/lib/reveal";
 import { useServiceForm } from "../Shell";
-import { useDraw } from "./useDraw";
-import { Humanoid } from "../RobotArt";
+import { usePhotoReveal } from "./usePhotoReveal";
+import RobotPhoto from "./RobotPhoto";
 
 const STATS = [
   ["Duration", "6", "months"],
@@ -15,7 +15,7 @@ export default function HomeCaseStudy({ onNavigate }: { onNavigate: (t: string) 
   const root = useRef<HTMLElement>(null);
   const openServiceForm = useServiceForm();
   useReveal(root);
-  useDraw(root);
+  usePhotoReveal(root);
 
   return (
     <section className="section hm" id="case-studies" ref={root}>
@@ -46,7 +46,7 @@ export default function HomeCaseStudy({ onNavigate }: { onNavigate: (t: string) 
         </div>
 
         <div className="hm-media rv" aria-hidden="true">
-          <Humanoid />
+          <RobotPhoto name="chichi" />
           <span className="hm-media-tag mono">Phase 01 → 03</span>
         </div>
       </div>
