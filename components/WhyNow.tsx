@@ -39,7 +39,7 @@ export default function WhyNow() {
     <section className="section ruled" id="why" ref={root}>
       <div className="container">
         <div className="sec-head">
-          <span className="section-tag rv">[06] Why Robotics, Why Now</span>
+          <span className="section-tag rv">Why Robotics, Why Now</span>
           <h2 className="h2 rv">
             Where AI leaves the screen and <span className="accent">enters the real world.</span>
           </h2>

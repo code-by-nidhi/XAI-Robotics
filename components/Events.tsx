@@ -18,7 +18,7 @@ export default function Events({ onNavigate }: { onNavigate: (t: string) => void
     <section className="section ruled" id="events" ref={root}>
       <div className="container ev-grid">
         <div>
-          <span className="section-tag rv">[13] Workshops &amp; Events</span>
+          <span className="section-tag rv">Workshops &amp; Events</span>
           <h2 className="h2 rv">
             Robotics on stage, on campus, <span className="accent">in your school.</span>
           </h2>

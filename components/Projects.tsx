@@ -214,7 +214,7 @@ export default function Projects({ onNavigate, onLock }: Props) {
     <section className="section projects" id="projects" ref={root}>
       <div className="container">
         <div className="pj-head">
-          <span className="section-tag">[09] Phase 02 · The Project Matrix</span>
+          <span className="section-tag">Phase 02 · The Project Matrix</span>
           <h2 className="h2">
             Choose your build.
             <br />

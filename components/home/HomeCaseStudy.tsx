@@ -22,10 +22,9 @@ export default function HomeCaseStudy({ onNavigate }: { onNavigate: (t: string) 
       <div className="container hm-split">
         <div className="hm-split-copy">
           <span className="section-tag rv">Case study</span>
-          <h2 className="h2 rv">Introducing the XAI programme</h2>
+          <h2 className="h2 rv">Introducing the X AI Robotics Programme</h2>
           <p className="muted rv">
-            Three phases — foundation, build and R&amp;D — that take a student from the first circuit to a robot they
-            designed, built and keep.
+            Three structured phases — 12 foundational technical modules, 12 practical robotics builds and optional R&amp;D incubation — taking learners from core principles to real-world intelligent machines.
           </p>
           <dl className="hm-stats rv">
             {STATS.map(([label, n, unit]) => (

@@ -22,8 +22,11 @@ export default function HomeClosing({ social }: { social: SiteSettings["social"]
     <section className="hm-closing" ref={root}>
       <div className="container">
         <h2 className="h2 rv">From India to the world</h2>
+        <p className="mono rv" style={{ fontSize: "14px", color: "var(--accent)", marginTop: "12px", letterSpacing: "0.04em" }}>
+          Engineer the Future. Build Intelligent Machines.
+        </p>
         <p className="muted rv hm-closing-lede">
-          An India that learns robotics, builds robotics and contributes to the world&apos;s intelligent future.
+          From Robotics Education to Real-World Innovation — connecting Indian innovation with the possibilities of a rapidly advancing world.
         </p>
         {profiles.length > 0 && (
           <div className="hm-social rv">

@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { useGsapTilt } from "@/lib/gsapEffects";
 import { useServiceForm } from "../Shell";
 import ChiChi from "../ChiChi";
 import CrossBands from "./CrossBands";
@@ -26,6 +27,7 @@ export default function HomeHero({ onNavigate }: { onNavigate: (t: string) => vo
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressRef = useRef<HTMLElement>(null);
   const openServiceForm = useServiceForm();
+  useGsapTilt(root, ".hh-card");
 
   // Intro text animation.
   useGSAP(
@@ -161,38 +163,61 @@ export default function HomeHero({ onNavigate }: { onNavigate: (t: string) => vo
         <div className="container hh-grid">
           <div className="hh-copy">
             <p className="eyebrow hh-fade">
-              <span className="pulse" /> Robotics · AI · Research &amp; Innovation
+              <span className="pulse" /> Established August 2025 · An initiative of techcadd
             </p>
             <h1 className="hh-title">
               <span className="hh-line">
-                <span>The future of</span>
+                <span>X AI ROBOTICS</span>
               </span>
               <span className="hh-line">
-                <span>robotics is</span>
+                <span className="hh-dim" style={{ fontSize: "0.55em", letterSpacing: "0.01em", display: "block", marginTop: "4px" }}>
+                  Engineering the Future
+                </span>
               </span>
               <span className="hh-line">
-                <span className="hh-dim">built here</span>
+                <span style={{ fontSize: "0.48em", letterSpacing: "0.01em", display: "block" }}>
+                  Bringing Intelligence to Life
+                </span>
               </span>
             </h1>
             <div className="hh-actions hh-fade">
-              <button type="button" className="btn btn-primary" onClick={openServiceForm}>
-                Request a Service <span aria-hidden>→</span>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  const el = document.getElementById("services");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                  else onNavigate("/services");
+                }}
+              >
+                Explore Our Robotics Services <span aria-hidden>→</span>
               </button>
-              <a href="/services" className="hh-link" onClick={(e) => go(e, "/services")}>
-                Explore services <span aria-hidden>→</span>
-              </a>
+              <button type="button" className="btn btn-ghost" onClick={openServiceForm}>
+                <span className="btn-dot" /> Partner With X AI Robotics
+              </button>
             </div>
           </div>
 
           <aside className="hh-card hh-fade">
-            <p className="mono muted hh-card-eyebrow">Est. August 2025</p>
-            <h2 className="hh-card-title">Our journey began with Chi Chi</h2>
-            <p className="muted hh-card-text">
-              Where Artificial Intelligence meets the physical world — practical robotics education, intelligent
-              automation and research-driven innovation, rooted in India.
+            <div className="hh-quote-bubble">
+              <p>
+                &ldquo;We don&apos;t just introduce people to robots. We help them understand, build and explore the technology behind them.&rdquo;
+              </p>
+            </div>
+            <p className="hh-card-tagline">
+              FROM ROBOTICS EDUCATION TO REAL-WORLD INNOVATION
             </p>
-            <a href="/about#journey" className="btn btn-ghost hh-card-btn" onClick={(e) => go(e, "/about#journey")}>
-              <span className="btn-dot" /> Our journey
+            <a
+              href="#beginning"
+              className="hh-card-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById("beginning");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                else onNavigate("/about-us");
+              }}
+            >
+              <span className="btn-dot" /> OUR JOURNEY
             </a>
           </aside>
         </div>
@@ -211,7 +236,7 @@ export default function HomeHero({ onNavigate }: { onNavigate: (t: string) => vo
             <h2 className="h2 hv-fade">Where technology meets intelligence</h2>
             <p className="muted hv-fade">
               Embedded systems, mechatronics, computer vision and ROS 2 — watch an intelligent machine being designed,
-              assembled and brought online at XAI Robotics.
+              assembled and brought online at X AI Robotics.
             </p>
             <div className="hv-fade">
               <button type="button" className="btn btn-primary" onClick={openServiceForm}>
@@ -232,7 +257,7 @@ export default function HomeHero({ onNavigate }: { onNavigate: (t: string) => vo
                 aria-label="A robot being assembled, shown in black and grey. Scroll to play."
               />
               <span className="hv-fadeout" aria-hidden="true" />
-              <span className="hh-chip hh-chip-tl mono">XAI · Lab 01</span>
+              <span className="hh-chip hh-chip-tl mono">X AI · Lab 01</span>
               <span className="hh-chip hh-chip-br mono" aria-hidden="true">
                 Scroll to play ↓
               </span>

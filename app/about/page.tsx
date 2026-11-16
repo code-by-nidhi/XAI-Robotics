@@ -3,8 +3,18 @@ import AboutPage from "@/components/pages/AboutPage";
 import { getFaqs, getSite, getTestimonials } from "@/lib/cms";
 
 export const metadata: Metadata = {
-  title: "About us",
-  description: "XAI Robotics is a hands-on robotics lab: our mission, values, team and labs.",
+  title: "About X AI Robotics | Our Mission & Vision",
+  description:
+    "Discover X AI Robotics, established in August 2025 with AI robot dog Chi Chi. Explore our mission, vision and commitment to India's robotics future.",
+  keywords: [
+    "About X AI Robotics",
+    "Robotics Innovation India",
+    "Robotics Technology",
+    "Robotics Research",
+  ],
+  alternates: {
+    canonical: "/about-us",
+  },
 };
 
 export default async function Page() {

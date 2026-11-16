@@ -182,7 +182,7 @@ export default function Core() {
           <span className="core-label mono">NEURAL CORE · v4.2 · 1.1B PARAMS</span>
         </div>
         <div className="core-copy">
-          <span className="section-tag core-reveal">[04] Intelligence</span>
+          <span className="section-tag core-reveal">Intelligence</span>
           <h2 className="h2 core-reveal">
             A brain that <span className="accent">understands physics.</span>
           </h2>

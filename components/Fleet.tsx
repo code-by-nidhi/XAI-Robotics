@@ -132,7 +132,7 @@ export default function Fleet() {
     <section className="fleet" id="fleet" ref={root}>
       <div className="fl-track">
         <div className="fl-intro">
-          <span className="section-tag">[03] The Fleet</span>
+          <span className="section-tag">The Fleet</span>
           <h2 className="h2">
             Four bodies.
             <br />

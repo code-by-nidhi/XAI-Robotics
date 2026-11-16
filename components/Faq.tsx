@@ -13,7 +13,7 @@ export default function Faq({ items }: { items: FaqItem[] }) {
     <section className="section ruled" id="faq" ref={root}>
       <div className="container">
         <div className="sec-head">
-          <span className="section-tag rv">[15] Questions</span>
+          <span className="section-tag rv">Questions</span>
           <h2 className="h2 rv">
             Frequently asked <span className="accent">questions.</span>
           </h2>

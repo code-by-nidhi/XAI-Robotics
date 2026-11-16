@@ -1,6 +1,11 @@
 "use client";
 
-const PHRASES = ["A techcadd initiative", "An Innovation by techcadd", "XAI Robotics"];
+const PHRASES = [
+  "An initiative of techcadd",
+  "Engineer the Future",
+  "Build Intelligent Machines",
+  "X AI Robotics",
+];
 
 /** One half of a band's loop: the phrases repeated enough to overfill wide screens. */
 function Run({ hidden = false }: { hidden?: boolean }) {

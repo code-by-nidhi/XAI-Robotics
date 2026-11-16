@@ -39,7 +39,7 @@ export default function Manifesto() {
     <section className="section manifesto" ref={root}>
       <div className="container">
         <div className="mf-meta">
-          <span className="section-tag">[01] Manifesto</span>
+          <span className="section-tag">Manifesto</span>
           <span className="mono muted">MISSION.TXT — 2026</span>
         </div>
         <p className="mf-text">

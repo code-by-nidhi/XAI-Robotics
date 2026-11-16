@@ -1,24 +1,21 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
-import { cmsBrowserUrl } from "@/lib/cms";
 import { LogoMark } from "./Logo";
 import ChiChi from "./ChiChi";
 
 export const SERVICE_OPTIONS = [
-  "Robotics Programme",
-  "R&D Incubation",
-  "School & College Workshops",
-  "Robot Shows & Events",
-  "Lab Setup & Franchise",
-  "Custom Robot Builds",
-  "Something else",
+  "Education & Skill Development",
+  "Industrial Automation",
+  "AI & Autonomous Systems",
+  "Robotics Products & Distribution",
+  "Research & Development"
 ];
 
 const HIGHLIGHTS = [
-  "Hands-on robotics, AI & embedded systems",
-  "ROS 2, computer vision and CAD in real builds",
-  "Workshops, labs and institutional partnerships",
+  "Engineer the Future. Build Intelligent Machines.",
+  "From Robotics Education to Real-World Innovation.",
+  "Established August 2025 · An initiative of techcadd",
 ];
 
 type Field = "name" | "phone" | "email" | "service";
@@ -45,10 +42,12 @@ export default function ServiceModal({
   open,
   onClose,
   responseTime,
+  initialService,
 }: {
   open: boolean;
   onClose: () => void;
   responseTime: string;
+  initialService?: string;
 }) {
   const id = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -101,17 +100,10 @@ export default function ServiceModal({
       return;
     }
 
-    const url = cmsBrowserUrl("/public/enquiries");
-    if (!url) {
-      setStatus("error");
-      setNotice("The form isn't connected yet. Please try again later.");
-      return;
-    }
-
     setStatus("sending");
     setNotice("");
     try {
-      const response = await fetch(url, {
+      const response = await fetch("/api/request-service", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -183,12 +175,11 @@ export default function ServiceModal({
         <aside className="sm-side">
           <div className="sm-brand">
             <LogoMark size={36} />
-            <span className="mono">XAI Robotics</span>
+            <span className="mono">X AI Robotics</span>
           </div>
           <h2 className="sm-side-title">Where AI meets the physical world</h2>
           <p className="sm-side-text">
-            Since August 2025, starting with Chi Chi — our AI robotic dog — we&apos;ve been bringing practical robotics
-            to students, educators, institutions and industry across India.
+            Established in August 2025 with Chi Chi, our new-age AI robot dog prototype. We connect artificial intelligence with physical intelligence through practical engineering and institutional innovation.
           </p>
           <ul className="sm-points">
             {HIGHLIGHTS.map((h) => (
@@ -219,7 +210,7 @@ export default function ServiceModal({
               </h2>
               <p className="muted sm-lede">Share a few details and our team will get back to you.</p>
 
-              <form className="sm-form" onSubmit={submit} noValidate>
+              <form className="sm-form" onSubmit={submit} noValidate key={open ? (initialService || "default") : "none"}>
                 <label className="sm-field">
                   <span>Name</span>
                   <input {...field("name")} ref={firstFieldRef} autoComplete="name" placeholder="Your full name" />
@@ -237,7 +228,7 @@ export default function ServiceModal({
                 </label>
                 <label className="sm-field">
                   <span>Service interested</span>
-                  <select {...field("service")} defaultValue="">
+                  <select {...field("service")} defaultValue={initialService || ""}>
                     <option value="" disabled>
                       Select a service
                     </option>

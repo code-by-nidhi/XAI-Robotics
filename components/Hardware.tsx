@@ -66,7 +66,7 @@ export default function Hardware() {
     <section className="section ruled" id="hardware" ref={root}>
       <div className="container">
         <div className="sec-head">
-          <span className="section-tag rv">[10] Hardware You&apos;ll Master</span>
+          <span className="section-tag rv">Hardware You&apos;ll Master</span>
           <h2 className="h2 rv">
             Professional components, <span className="accent">not toy kits.</span>
           </h2>

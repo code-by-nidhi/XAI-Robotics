@@ -84,7 +84,7 @@ export default function Toolchain() {
     <section className="section ruled" id="toolchain" ref={root}>
       <div className="container">
         <div className="sec-head">
-          <span className="section-tag rv">[08] The Industry Toolchain</span>
+          <span className="section-tag rv">The Industry Toolchain</span>
           <h2 className="h2 rv">
             The tools robotics companies <span className="accent">actually use.</span>
           </h2>

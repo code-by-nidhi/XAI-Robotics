@@ -63,20 +63,20 @@ export interface FaqItem {
 /** What the site printed before the CMS existed; also the CMS's own defaults. */
 export const FALLBACK_SITE: SiteSettings = {
   general: {
-    siteName: "XAI Robotics",
-    tagline: "Machines that perceive, reason and move",
+    siteName: "X AI Robotics",
+    tagline: "Engineer the Future. Build Intelligent Machines.",
     contactEmail: "hello@xairobotics.com",
     phone: "",
-    address: "HQ — San Francisco, CA",
-    city: "LAB — Munich, DE",
+    address: "",
+    city: "",
     hours: "",
     responseTime: "within 48 hours",
   },
   social: { linkedin: "", facebook: "", x: "", youtube: "", instagram: "" },
   seo: {
-    defaultTitle: "XAI Robotics — Machines that perceive, reason and move",
+    defaultTitle: "X AI Robotics | Robotics Solutions & Innovation",
     defaultDescription:
-      "XAI Robotics engineers autonomous humanoids, manipulators, quadrupeds and aerial systems powered by embodied intelligence.",
+      "X AI Robotics, established in August 2025, delivers robotics demonstrations, lab setup, workshops, prototyping and innovation services, featuring AI robot dog Chi Chi.",
     allowIndexing: true,
   },
 };

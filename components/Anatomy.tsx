@@ -81,7 +81,7 @@ export default function Anatomy() {
     <section className="anatomy" id="anatomy" ref={root}>
       <div className="container anatomy-grid">
         <div className="a-head">
-          <span className="section-tag">[02] Systems Anatomy</span>
+          <span className="section-tag">Systems Anatomy</span>
           <h2 className="h2">
             Every joint, <span className="accent">engineered.</span>
           </h2>

@@ -17,7 +17,7 @@ export default function Logo() {
     <span className="logo">
       <LogoMark />
       <span className="logo-text">
-        <span className="logo-name">XAI</span>
+        <span className="logo-name">X AI</span>
         <span className="logo-sub">ROBOTICS</span>
       </span>
     </span>

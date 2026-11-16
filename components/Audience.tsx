@@ -40,7 +40,7 @@ export default function Audience() {
     <section className="section ruled" id="audience" ref={root}>
       <div className="container">
         <div className="sec-head">
-          <span className="section-tag rv">[12] Is This For You?</span>
+          <span className="section-tag rv">Is This For You?</span>
           <h2 className="h2 rv">
             Built for curious minds <span className="accent">at every stage.</span>
           </h2>

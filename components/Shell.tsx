@@ -10,8 +10,8 @@ import Nav from "./Nav";
 import Footer from "./Footer";
 import ServiceModal from "./ServiceModal";
 
-/** Opens the "Request a service" pop-up from anywhere. */
-const ServiceFormContext = createContext<() => void>(() => {});
+/** Opens the "Request a service" pop-up from anywhere, optionally preselecting a service. */
+const ServiceFormContext = createContext<(service?: string | unknown) => void>(() => {});
 export const useServiceForm = () => useContext(ServiceFormContext);
 
 /** The pop-up opens by itself on every full page load (including a refresh), shortly after render. */
@@ -145,8 +145,16 @@ export default function Shell({ site, children }: { site: SiteSettings; children
     }).catch(() => {});
   }, [pathname]);
 
-  const openForm = useCallback(() => setFormOpen(true), []);
-  const closeForm = useCallback(() => setFormOpen(false), []);
+  const [selectedService, setSelectedService] = useState<string | undefined>();
+
+  const openForm = useCallback((service?: string | unknown) => {
+    setSelectedService(typeof service === "string" ? service : undefined);
+    setFormOpen(true);
+  }, []);
+  const closeForm = useCallback(() => {
+    setFormOpen(false);
+    setSelectedService(undefined);
+  }, []);
 
   // The page behind the pop-up doesn't scroll while it is open.
   useEffect(() => {
@@ -188,7 +196,12 @@ export default function Shell({ site, children }: { site: SiteSettings; children
       <Nav />
       {children}
       <Footer social={site.social} />
-      <ServiceModal open={formOpen} onClose={closeForm} responseTime={site.general.responseTime} />
+      <ServiceModal
+        open={formOpen}
+        onClose={closeForm}
+        responseTime={site.general.responseTime}
+        initialService={selectedService}
+      />
     </GoContext.Provider>
     </ServiceFormContext.Provider>
     </LockContext.Provider>

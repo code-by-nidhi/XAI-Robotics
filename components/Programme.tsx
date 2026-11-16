@@ -94,7 +94,7 @@ export default function Programme() {
     <section className="section ruled programme" id="programme" ref={root}>
       <div className="container">
         <div className="sec-head">
-          <span className="section-tag rv">[07] The 6-Month Programme</span>
+          <span className="section-tag rv">The 6-Month Programme</span>
           <h2 className="h2 rv">
             Learn it. Build it. <span className="accent">Invent with it.</span>
           </h2>

@@ -4,7 +4,7 @@ import { useRef, useState, type FormEvent } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { cmsBrowserUrl, type SiteSettings } from "@/lib/cms";
 
-const LINES = ["Let's build", "what moves", "next."];
+const LINES = ["Let's build", "something", "intelligent."];
 
 type Status = "idle" | "sending" | "sent" | "error";
 type Field = "name" | "email" | "phone" | "role" | "interest" | "message";
@@ -174,20 +174,21 @@ export default function Contact({ site }: { site: SiteSettings }) {
         <div className="ct-grid">
           <div className="ct-info">
             <p className="muted ct-reveal">
-              Book a free lab tour, enrol in the programme, bring a workshop to your institution or deploy robots in
-              industry — tell us a little about yourself and our team replies {responseTime || "as soon as we can"}.
+              Whether you represent an educational institution, a business, a technology organisation or simply have an
+              interest in robotics, X AI Robotics invites you to explore the possibilities of intelligent machines. Tell
+              us about your project and our team replies {responseTime || "within 48 hours"}.
             </p>
             {contactEmail && (
               <a href={`mailto:${contactEmail}`} className="ct-mail ct-reveal">
                 {contactEmail}
               </a>
             )}
-            <div className="ct-meta mono muted ct-reveal">
-              {address && <span>{address}</span>}
-              {city && <span>{city}</span>}
-              {phone && <a href={`tel:${phone.replace(/[^+\d]/g, "")}`}>{phone}</a>}
-              {hours && <span>{hours}</span>}
-            </div>
+            {(phone || hours) ? (
+              <div className="ct-meta mono muted ct-reveal">
+                {phone && <a href={`tel:${phone.replace(/[^+\d]/g, "")}`}>{phone}</a>}
+                {hours && <span>{hours}</span>}
+              </div>
+            ) : null}
           </div>
 
           <form className="ct-form" onSubmit={submit}>

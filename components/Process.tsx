@@ -60,7 +60,7 @@ export default function Process() {
     <section className="section process" id="process" ref={root}>
       <div className="container">
         <div className="pr-head">
-          <span className="section-tag">[05] The Loop</span>
+          <span className="section-tag">The Loop</span>
           <h2 className="h2">
             Sense. Think. <span className="accent">Move.</span> Repeat.
           </h2>

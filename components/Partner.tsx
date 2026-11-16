@@ -33,7 +33,7 @@ export default function Partner({ onNavigate }: { onNavigate: (t: string) => voi
     <section className="section ruled" id="franchise" ref={root}>
       <div className="container">
         <div className="sec-head">
-          <span className="section-tag rv">[14] Why XAI Robotics</span>
+          <span className="section-tag rv">Why XAI Robotics</span>
           <h2 className="h2 rv">
             Real engineering, from the first class <span className="accent">to the final prototype.</span>
           </h2>

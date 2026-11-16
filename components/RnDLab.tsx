@@ -34,7 +34,7 @@ export default function RnDLab() {
     <section className="section ruled rd" id="rd" ref={root}>
       <div className="container rd-grid">
         <div>
-          <span className="section-tag rv">[11] Phase 03 · R&amp;D Lab</span>
+          <span className="section-tag rv">Phase 03 · R&amp;D Lab</span>
           <h2 className="h2 rv">
             Your idea. <span className="accent-amber">Our hardware.</span>
           </h2>
